@@ -15,12 +15,16 @@
  */
 package com.github.cerricks.evaluator.service;
 
+import static com.github.cerricks.evaluator.Constants.PROPERTY_TOTAL_LOAN_AMOUNT;
+import static com.github.cerricks.evaluator.Constants.PROPERTY_TOTAL_LOAN_PAYMENT;
 import com.github.cerricks.evaluator.dao.InputCategoryRepository;
 import com.github.cerricks.evaluator.model.InputCategory;
 import com.github.cerricks.evaluator.model.Loan;
 import com.github.cerricks.evaluator.model.LoanPayment;
 import com.github.cerricks.evaluator.model.LoanRate;
+import com.github.cerricks.evaluator.model.NamedProperty;
 import com.github.cerricks.evaluator.util.LoanPaymentCalculator;
+import java.util.Map;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -28,8 +32,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import static com.github.cerricks.evaluator.Constants.PROPERTY_TOTAL_LOAN_AMOUNT;
-import static com.github.cerricks.evaluator.Constants.PROPERTY_TOTAL_LOAN_PAYMENT;
 
 /**
  *
@@ -50,7 +52,7 @@ public class LoanPaymentServiceImpl implements LoanPaymentService {
     private IncomeTaxService incomeTaxService;
 
     @Autowired
-    private NamedPropertyService namedValueService;
+    private Map<String, NamedProperty> properties;
 
     private final ObservableList<LoanPayment> loanPayments;
 
@@ -80,8 +82,8 @@ public class LoanPaymentServiceImpl implements LoanPaymentService {
             totalLoanPayment += loanPayment.getAnnualPayment();
         }
 
-        namedValueService.setValue(PROPERTY_TOTAL_LOAN_AMOUNT, totalLoanAmount);
-        namedValueService.setValue(PROPERTY_TOTAL_LOAN_PAYMENT, totalLoanPayment);
+        properties.get(PROPERTY_TOTAL_LOAN_AMOUNT).set(totalLoanAmount);
+        properties.get(PROPERTY_TOTAL_LOAN_PAYMENT).set(totalLoanPayment);
     }
 
     @Override
@@ -118,12 +120,11 @@ public class LoanPaymentServiceImpl implements LoanPaymentService {
             double totalInterestPayment = loanPaymentCalculator.calculateInterestPaid(loan);
 
             /**
-             * Note: The order that these properties are set is important. The
-             * loan must be set at the end due to the listener on it that
-             * requires other properties to be set.
+             * Note: The order that these properties are set is important. The loan must be set at
+             * the end due to the listener on it that requires other properties to be set.
              *
-             * TODO: is there a better way to handle this? Possibly delaying
-             * listener until end of method???
+             * TODO: is there a better way to handle this? Possibly delaying listener until end of
+             * method???
              */
             loanPayment.setCategory(loanPayment.getCategory());
             loanPayment.monthlyPaymentProperty().set(monthlyPayment);

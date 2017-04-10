@@ -15,11 +15,14 @@
  */
 package com.github.cerricks.evaluator.controller;
 
+import static com.github.cerricks.evaluator.Constants.PROPERTY_TAXABLE_INCOME;
 import com.github.cerricks.evaluator.model.FilingStatus;
 import com.github.cerricks.evaluator.model.IncomeTaxPayment;
+import com.github.cerricks.evaluator.model.NamedProperty;
 import com.github.cerricks.evaluator.service.IncomeTaxService;
 import com.github.cerricks.evaluator.ui.CurrencyTableCellFormatter;
 import com.github.cerricks.evaluator.ui.CustomCurrencyStringConverter;
+import java.util.Map;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -29,8 +32,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import com.github.cerricks.evaluator.service.NamedPropertyService;
-import static com.github.cerricks.evaluator.Constants.PROPERTY_TAXABLE_INCOME;
 
 /**
  * Handles displaying view of computed income tax payments.
@@ -46,7 +47,7 @@ public class IncomeTaxPaymentOverviewController {
     private IncomeTaxService incomeTaxService;
 
     @Autowired
-    private NamedPropertyService namedValueService;
+    private Map<String, NamedProperty> properties;
 
     @FXML
     private Label taxableIncomeLabel;
@@ -75,7 +76,7 @@ public class IncomeTaxPaymentOverviewController {
             logger.debug("Initializing: IncomeTaxPaymentOverviewController");
         }
 
-        taxableIncomeLabel.textProperty().bindBidirectional(namedValueService.getByName(PROPERTY_TAXABLE_INCOME), new CustomCurrencyStringConverter());
+        taxableIncomeLabel.textProperty().bindBidirectional(properties.get(PROPERTY_TAXABLE_INCOME), new CustomCurrencyStringConverter());
 
         // configure table
         incomeTaxPaymentTable.setItems(incomeTaxService.getIncomeTaxPayments());

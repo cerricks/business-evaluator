@@ -20,7 +20,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.TableView;
 
 /**
- * Event handler for moving a table row up.
+ * Event handler for moving a table row up in a view.
  *
  * @author cerricks
  */
@@ -28,6 +28,11 @@ public class TableRowMoveUpEventHandler implements EventHandler<ActionEvent> {
 
     private final TableView table;
 
+    /**
+     * Creates instance of TableRowMoveUpEventHandler on the given table view.
+     *
+     * @param table the table view to add the event handler to.
+     */
     public TableRowMoveUpEventHandler(final TableView table) {
         this.table = table;
     }

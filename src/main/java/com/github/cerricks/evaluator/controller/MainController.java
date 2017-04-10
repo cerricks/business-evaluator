@@ -19,9 +19,10 @@ import static com.github.cerricks.evaluator.Constants.PROPERTY_ASKING_PRICE;
 import static com.github.cerricks.evaluator.Constants.PROPERTY_DOWN_PAYMENT;
 import static com.github.cerricks.evaluator.Constants.PROPERTY_ORIGINAL_CASH_FLOW;
 import com.github.cerricks.evaluator.MainApp;
-import com.github.cerricks.evaluator.service.NamedPropertyService;
+import com.github.cerricks.evaluator.model.NamedProperty;
 import com.github.cerricks.evaluator.ui.CustomCurrencyStringConverter;
 import java.text.NumberFormat;
+import java.util.Map;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -48,7 +49,7 @@ public class MainController {
     private MainApp mainApp;
 
     @Autowired
-    private NamedPropertyService namedValueService;
+    private Map<String, NamedProperty> properties;
 
     @FXML
     private MenuItem exitMenuItem;
@@ -90,13 +91,13 @@ public class MainController {
 
         StringConverter currencyStringConverter = new CustomCurrencyStringConverter(currencyFormat);
 
-        askingPriceField.textProperty().bindBidirectional(namedValueService.getByName(PROPERTY_ASKING_PRICE), currencyStringConverter);
+        askingPriceField.textProperty().bindBidirectional(properties.get(PROPERTY_ASKING_PRICE), currencyStringConverter);
         askingPriceField.setTextFormatter(new TextFormatter(currencyStringConverter));
 
-        downPaymentField.textProperty().bindBidirectional(namedValueService.getByName(PROPERTY_DOWN_PAYMENT), currencyStringConverter);
+        downPaymentField.textProperty().bindBidirectional(properties.get(PROPERTY_DOWN_PAYMENT), currencyStringConverter);
         downPaymentField.setTextFormatter(new TextFormatter(currencyStringConverter));
 
-        originalCashFlowField.textProperty().bindBidirectional(namedValueService.getByName(PROPERTY_ORIGINAL_CASH_FLOW), currencyStringConverter);
+        originalCashFlowField.textProperty().bindBidirectional(properties.get(PROPERTY_ORIGINAL_CASH_FLOW), currencyStringConverter);
         originalCashFlowField.setTextFormatter(new TextFormatter(currencyStringConverter));
     }
 

@@ -19,14 +19,16 @@ import java.math.RoundingMode;
 import java.text.NumberFormat;
 
 /**
- * A utility to for simple formatting.
+ * A utility to for basic formatting.
  *
  * @author cerricks
  */
 public class FormatUtil {
 
     private static final NumberFormat currencyFormat;
+
     private static final NumberFormat numberFormat;
+
     private static final NumberFormat percentFormat;
 
     static {
@@ -36,6 +38,8 @@ public class FormatUtil {
 
         // initialize generic number format
         numberFormat = NumberFormat.getNumberInstance();
+        numberFormat.setMaximumFractionDigits(4);
+        numberFormat.setRoundingMode(RoundingMode.HALF_UP);
 
         // initialize percentage format
         percentFormat = NumberFormat.getPercentInstance();

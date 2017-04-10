@@ -22,8 +22,10 @@ import static com.github.cerricks.evaluator.Constants.PROPERTY_TOTAL_LOAN_PAYMEN
 import com.github.cerricks.evaluator.model.FilingStatus;
 import static com.github.cerricks.evaluator.model.FilingStatus.SINGLE;
 import com.github.cerricks.evaluator.model.IncomeTaxPayment;
+import com.github.cerricks.evaluator.model.NamedProperty;
 import com.github.cerricks.evaluator.util.FormatUtil;
 import com.github.cerricks.evaluator.util.IncomeTaxPaymentCalculator;
+import java.util.Map;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.slf4j.Logger;
@@ -44,7 +46,7 @@ public class IncomeTaxServiceImpl implements IncomeTaxService {
     private IncomeTaxPaymentCalculator incomeTaxCalculator;
 
     @Autowired
-    private NamedPropertyService namedValueService;
+    private Map<String, NamedProperty> properties;
 
     private final ObservableList<IncomeTaxPayment> incomeTaxPayments;
 
@@ -58,7 +60,7 @@ public class IncomeTaxServiceImpl implements IncomeTaxService {
 
         calculateTaxableIncome();
 
-        double taxableIncome = namedValueService.getValue(PROPERTY_TAXABLE_INCOME).doubleValue();
+        double taxableIncome = properties.get(PROPERTY_TAXABLE_INCOME).doubleValue();
 
         if (taxableIncome > 0) {
             for (FilingStatus filingStatus : FilingStatus.values()) {
@@ -74,7 +76,7 @@ public class IncomeTaxServiceImpl implements IncomeTaxService {
 
         for (IncomeTaxPayment incomeTaxPayment : incomeTaxPayments) {
             if (incomeTaxPayment.getFilingStatus() == SINGLE) {
-                namedValueService.setValue(PROPERTY_CASH_AFTER_TAX, incomeTaxPayment.getTotalIncomeAfterTax()); // TODO: fix this
+                properties.get(PROPERTY_CASH_AFTER_TAX).set(incomeTaxPayment.getTotalIncomeAfterTax()); // TODO: fix this
             }
         }
     }
@@ -86,8 +88,8 @@ public class IncomeTaxServiceImpl implements IncomeTaxService {
         }
 
         try {
-            double originalCashFlow = namedValueService.getValue(PROPERTY_ORIGINAL_CASH_FLOW).doubleValue();
-            double totalLoanPayment = namedValueService.getValue(PROPERTY_TOTAL_LOAN_PAYMENT).doubleValue();
+            double originalCashFlow = properties.get(PROPERTY_ORIGINAL_CASH_FLOW).doubleValue();
+            double totalLoanPayment = properties.get(PROPERTY_TOTAL_LOAN_PAYMENT).doubleValue();
 
             double taxableIncome = originalCashFlow - totalLoanPayment;
 
@@ -96,7 +98,7 @@ public class IncomeTaxServiceImpl implements IncomeTaxService {
                 logger.debug("Calculated taxable income: " + FormatUtil.formatCurrency(taxableIncome));
             }
 
-            namedValueService.setValue(PROPERTY_TAXABLE_INCOME, taxableIncome);
+            properties.get(PROPERTY_TAXABLE_INCOME).set(taxableIncome);
         } catch (NumberFormatException ex) {
             logger.warn("Unable to calculate taxable income: " + ex.getMessage());
         }

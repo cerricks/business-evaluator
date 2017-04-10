@@ -25,8 +25,11 @@ import javafx.beans.property.SimpleDoubleProperty;
 public class Ratio {
 
     private final DoubleProperty firstProperty;
+
     private final DoubleProperty secondProperty;
+
     private final DoubleProperty percentageProperty = new SimpleDoubleProperty();
+
     private final DoubleProperty multipleProperty = new SimpleDoubleProperty();
 
     public Ratio(final DoubleProperty firstProperty, final DoubleProperty secondProperty) {
@@ -51,7 +54,7 @@ public class Ratio {
         double b = secondProperty.doubleValue();
 
         return a != 0
-                ? (a - b) / a
+                ? b / a
                 : 0;
     }
 

@@ -59,6 +59,7 @@ public class DebtRatioOverviewController {
 
     @FXML
     private TableColumn<DebtRatio, Double> preDebtPercentageColumn;
+
     @FXML
     private TableColumn<DebtRatio, Double> postTaxMultipleColumn;
 

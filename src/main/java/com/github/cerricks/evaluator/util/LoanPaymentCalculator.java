@@ -20,7 +20,7 @@ import com.github.cerricks.evaluator.model.Loan;
 /**
  * A utility for doing calculations on a loan.
  *
- * @author Clifford R. Errickson
+ * @author cerricks
  */
 public final class LoanPaymentCalculator {
 

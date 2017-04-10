@@ -22,12 +22,13 @@ import com.github.cerricks.evaluator.model.Input;
 import com.github.cerricks.evaluator.model.InputCategory;
 import static com.github.cerricks.evaluator.model.InputSource.USER;
 import com.github.cerricks.evaluator.model.InputType;
+import com.github.cerricks.evaluator.model.NamedProperty;
 import com.github.cerricks.evaluator.service.DebtRatioService;
 import com.github.cerricks.evaluator.service.IncomeTaxService;
 import com.github.cerricks.evaluator.service.LoanPaymentService;
-import com.github.cerricks.evaluator.service.NamedPropertyService;
 import com.github.cerricks.evaluator.ui.CustomCurrencyStringConverter;
 import com.github.cerricks.evaluator.util.FormatUtil;
+import java.util.Map;
 import java.util.Optional;
 import javafx.beans.binding.Bindings;
 import javafx.collections.ListChangeListener.Change;
@@ -77,7 +78,7 @@ public class UserDefinedInputOverviewController {
     private ObservableList<InputCategory> userDefinedInputCategories;
 
     @Autowired
-    private NamedPropertyService namedValueService;
+    private Map<String, NamedProperty> properties;
 
     @Autowired
     private ObservableList<Input> userDefinedInputs;
@@ -127,7 +128,7 @@ public class UserDefinedInputOverviewController {
             logger.debug("Initializing: UserDefinedInputOverviewController");
         }
 
-        totalAdditionalCostLabel.textProperty().bindBidirectional(namedValueService.getByName(PROPERTY_TOTAL_ADDITIONAL_EXPENSE), new CustomCurrencyStringConverter());
+        totalAdditionalCostLabel.textProperty().bindBidirectional(properties.get(PROPERTY_TOTAL_ADDITIONAL_EXPENSE), new CustomCurrencyStringConverter());
 
         userDefinedInputs.addListener((Change<? extends Input> change) -> {
             calculateTotalAdditionalCost();
@@ -283,7 +284,7 @@ public class UserDefinedInputOverviewController {
     public void reset() {
         clearInput();
 
-        namedValueService.setValue(PROPERTY_TOTAL_ADDITIONAL_EXPENSE, 0);
+        properties.get(PROPERTY_TOTAL_ADDITIONAL_EXPENSE).set(0);
         userDefinedInputs.clear();
     }
 
@@ -307,7 +308,7 @@ public class UserDefinedInputOverviewController {
             }
         }
 
-        namedValueService.setValue(PROPERTY_TOTAL_ADDITIONAL_EXPENSE, total);
+        properties.get(PROPERTY_TOTAL_ADDITIONAL_EXPENSE).set(total);
     }
 
 }
