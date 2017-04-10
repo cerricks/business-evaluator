@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<ScrollPane fitToHeight="true" fitToWidth="true" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.cerricks.evaluator.controller.IncomeTaxRateSettingsController">
+    <content>
+        <VBox spacing="5.0">
+            <children>
+                <TableView fx:id="incomeTaxRateTable" editable="true" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="filingStatusColumn" editable="false" prefWidth="175.0" text="Filing Status" />
+                        <TableColumn fx:id="taxableIncomeColumn" prefWidth="250.0" style="-fx-alignment: CENTER-RIGHT;" text="Taxable Income" />
+                        <TableColumn fx:id="flatTaxColumn" prefWidth="150.0" style="-fx-alignment: CENTER-RIGHT;" text="Flat Tax" />
+                        <TableColumn fx:id="taxRateColumn" prefWidth="125.0" text="Tax Rate" />
+                    </columns>
+                </TableView>
+                <HBox alignment="CENTER_LEFT" prefHeight="12.0" prefWidth="750.0" spacing="5.0">
+                    <children>
+                        <ComboBox fx:id="filingStatusField" prefHeight="25.0" prefWidth="175.0" promptText="Select filing status" />
+                        <TextField fx:id="taxableIncomeFromField" alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="100.0" promptText="Income (from)" />
+                        <Label text="to" />
+                        <TextField fx:id="taxableIncomeToField" alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="100.0" promptText="Income (to)" />
+                        <Label text=":" />
+                        <TextField fx:id="flatTaxField" alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="100.0" promptText="Flat Tax" />
+                        <Label text="plus" />
+                        <TextField fx:id="taxRateField" alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="65.0" promptText="Rate" />
+                        <Button mnemonicParsing="false" onAction="#handleAdd" text="Add" />
+                    </children>
+                </HBox>
+            </children>
+            <padding>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            </padding>
+        </VBox>
+    </content>
+    <padding>
+        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+    </padding>
+</ScrollPane>

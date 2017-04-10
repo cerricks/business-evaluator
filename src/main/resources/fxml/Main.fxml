@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.cerricks.evaluator.controller.MainController">
+    <top>
+        <MenuBar BorderPane.alignment="CENTER">
+            <menus>
+                <Menu mnemonicParsing="false" text="File">
+                    <items>
+                        <MenuItem fx:id="exitMenuItem" mnemonicParsing="false" text="Exit" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Tools">
+                    <items>
+                        <MenuItem fx:id="settingsMenuItem" mnemonicParsing="false" text="Settings" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </top>
+    <center>
+        <SplitPane dividerPositions="0.5" focusTraversable="false" BorderPane.alignment="CENTER">
+            <items>              
+                <VBox>                    
+                    <GridPane hgap="20.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="100.0" BorderPane.alignment="CENTER" VBox.vgrow="NEVER">
+                        <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        </columnConstraints>
+                        <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        </rowConstraints>
+                        <children>
+                            <VBox alignment="TOP_CENTER">
+                                <children>
+                                    <Label text="Asking Price">
+                                        <font>
+                                            <Font name="System Bold" size="18.0" />
+                                        </font>
+                                        <VBox.margin>
+                                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                        </VBox.margin>
+                                    </Label>
+                                    <HBox alignment="CENTER">
+                                        <children>                                                
+                                            <TextField fx:id="askingPriceField" alignment="CENTER_RIGHT" prefColumnCount="10">                                          
+                                                <font>
+                                                    <Font size="18.0" />
+                                                </font>
+                                                <HBox.margin>
+                                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                </HBox.margin>
+                                            </TextField>
+                                        </children>
+                                    </HBox>
+                                </children>
+                            </VBox>
+                            <VBox alignment="TOP_CENTER" prefHeight="115.0" prefWidth="306.0" GridPane.columnIndex="1">
+                                <children>
+                                    <Label text="Down Payment">
+                                        <font>
+                                            <Font name="System Bold" size="18.0" />
+                                        </font>
+                                        <VBox.margin>
+                                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                        </VBox.margin>
+                                    </Label>
+                                    <HBox alignment="CENTER">
+                                        <children>
+                                            <TextField fx:id="downPaymentField" alignment="CENTER_RIGHT" prefColumnCount="10">
+                                                <font>
+                                                    <Font size="18.0" />
+                                                </font>
+                                                <HBox.margin>
+                                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                </HBox.margin>
+                                            </TextField>
+                                        </children>
+                                    </HBox>
+                                </children>
+                            </VBox>
+                            <VBox alignment="TOP_CENTER" GridPane.columnIndex="2">
+                                <children>
+                                    <Label text="Original Cash Flow">
+                                        <font>
+                                            <Font name="System Bold" size="18.0" />
+                                        </font>
+                                        <VBox.margin>
+                                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                        </VBox.margin>
+                                    </Label>
+                                    <HBox alignment="CENTER">
+                                        <children>
+                                            <TextField fx:id="originalCashFlowField" alignment="CENTER_RIGHT" prefColumnCount="10">
+                                                <font>
+                                                    <Font size="18.0" />
+                                                </font>
+                                                <HBox.margin>
+                                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                </HBox.margin>
+                                            </TextField>
+                                        </children>
+                                    </HBox>
+                                </children>
+                            </VBox>
+                        </children>
+                        <padding>
+                            <Insets left="20.0" right="20.0" />
+                        </padding>
+                    </GridPane>
+                    <VBox VBox.vgrow="ALWAYS">
+                        <children>
+                            <SplitPane dividerPositions="0.5" orientation="VERTICAL" VBox.vgrow="ALWAYS">
+                                <items>
+                                    <fx:include source="UserDefinedInputOverview.fxml" />                                        
+                                    <fx:include source="LoanPaymentOverview.fxml" />  
+                                </items>
+                            </SplitPane>
+                        </children>
+                    </VBox>
+                </VBox>
+                <VBox VBox.vgrow="ALWAYS">                    
+                    <children>
+                        <SplitPane dividerPositions="0.5" orientation="VERTICAL" VBox.vgrow="ALWAYS">
+                            <items>
+                                <fx:include source="IncomeTaxPaymentOverview.fxml" />                                       
+                                <fx:include source="DebtRatioOverview.fxml" />
+                            </items>
+                        </SplitPane>                             
+                    </children>
+                </VBox>
+            </items>
+        </SplitPane>
+    </center>
+    <bottom>
+        <ButtonBar prefHeight="50.0" BorderPane.alignment="CENTER_RIGHT">
+            <buttons>
+                <Button focusTraversable="false" mnemonicParsing="false" onAction="#handleClear" text="Clear">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Button>
+            </buttons>
+            <BorderPane.margin>
+                <Insets right="10.0" />
+            </BorderPane.margin>
+        </ButtonBar>
+    </bottom>
+</BorderPane>

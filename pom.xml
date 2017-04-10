@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.2.RELEASE</version>
+    </parent>
+   
+    <artifactId>business-evaluator</artifactId>
+    <groupId>com.github.cerricks</groupId>
+    <name>business-evaluator</name>
+    <description>JavaFX application for various calculations used to evaluate a business value.</description>
+    <version>1.2</version>
+    <url>https://github.com/cerricks/business-evaluator</url>
+    
+    <organization>
+        <name>Clifford Errickson</name>
+        <url>https://github.com/cerricks</url>
+    </organization>
+    
+    <developers>
+        <developer>
+            <id>cerricks</id>
+            <name>Clifford Errickson</name>
+            <email>Clifford.Errickson@gmail.com</email>
+            <organization>Freelancer</organization>
+            <url>https://github.com/cerricks</url>
+            <timezone>America/New_York</timezone>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </developer>
+    </developers>
+    
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+            <comments>A business-friendly OSS license</comments>
+        </license>
+    </licenses>  
+    
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <start-class>demo.App</start-class>
+        <java.version>1.8</java.version> 
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-logging</artifactId>
+        </dependency>        
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-actuator</artifactId>
+        </dependency>  
+        
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-keyvalue</artifactId>
+            <version>1.2.1.RELEASE</version>
+        </dependency>
+                   
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.derby</groupId>
+            <artifactId>derby</artifactId>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.apache.derby</groupId>
+            <artifactId>derbyclient</artifactId>
+            <version>10.13.1.1</version>
+        </dependency>
+          
+<!--
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+        </dependency> 
+-->      
+        
+        <!-- test dependencies -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+    
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin> 
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin> 
+ <!--           
+            <plugin>
+                <groupId>com.zenjava</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>8.8.3</version>
+                <configuration>
+                    <mainClass>com.github.cerricks.evaluator.MainApp</mainClass>
+                </configuration>
+            </plugin>
+          
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.8</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <configuration>
+                            <target>
+                                <taskdef name="jfxdeploy" classname="com.sun.javafx.tools.ant.DeployFXTask" classpathref="maven.plugin.classpath" />
+
+                                <jfxdeploy outdir="${project.build.directory}/deploy" outfile="${project.build.finalName}" nativeBundles="all">
+                                    <info title="${project.name}" />
+
+                                    <application name="${project.name}" mainClass="com.github.cerricks.evaluator.MainApp" />
+                                    
+                                    <resources>
+                                        <fileset dir="${project.build.directory}">
+                                            <include name="*.jar" />
+                                        </fileset>
+                                        <fileset dir="${basedir}/src/main/resources">
+                                            <include name="logging.properties" />
+                                        </fileset>
+                                    </resources>
+
+                                    <platform>
+                                        <jvmarg value="-Xms512m" />
+                                        <jvmarg value="-Xmx1024m" />
+                                        <jvmarg value="-Djava.util.logging.config.file=logging.properties" />
+                                    </platform>
+                                </jfxdeploy>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.oracle</groupId>
+                        <artifactId>ant-javafx</artifactId>
+                        <version>8.0</version>
+                        <systemPath>${java.home}/../lib/ant-javafx.jar</systemPath>
+                        <scope>system</scope>
+                    </dependency>
+                </dependencies>
+            </plugin> 
+            -->
+        </plugins>
+        <resources>
+            <!-- copy fxml and css resources -->
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.fxml</include>
+                    <include>**/*.css</include>
+                    <include>**/*.properties</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/test/java</directory>
+                <includes>
+                    <include>**/*.fxml</include>
+                    <include>**/*.css</include>
+                    <include>**/*.properties</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.*</include>
+                </includes>
+            </resource>
+        </resources>
+    </build>
+
+</project>

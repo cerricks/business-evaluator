@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane prefHeight="600.0" prefWidth="785.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.cerricks.evaluator.controller.SettingsController">
+    <center>
+        <TabPane tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">            
+            <tabs>
+                <Tab text="Income Tax Rates">
+                    <content>
+                        <fx:include source="IncomeTaxRateSettings.fxml" />
+                    </content>
+                </Tab>
+                <Tab text="Custom Inputs">
+                    <content>
+                        <fx:include source="InputCategorySettings.fxml" />
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </center>
+    <bottom>
+        <ButtonBar prefHeight="50.0" BorderPane.alignment="CENTER_RIGHT">
+            <buttons>
+                <Button defaultButton="true" mnemonicParsing="false" onAction="#handleSave" text="Save Settings" />
+                <Button mnemonicParsing="false" onAction="#handleCancel" prefWidth="120.0" text="Cancel" />
+            </buttons>
+            <padding>
+                <Insets right="10.0" />
+            </padding>
+        </ButtonBar>
+    </bottom>
+</BorderPane>

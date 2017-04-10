@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<TitledPane animated="false" collapsible="false" focusTraversable="false" minWidth="-Infinity" prefWidth="600.0" text="Federal Income Tax Payments" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.cerricks.evaluator.controller.IncomeTaxPaymentOverviewController">
+    <content>
+        <VBox>
+            <children>
+                <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" spacing="5.0" VBox.vgrow="NEVER">
+                    <children>
+                        <Label text="Total Taxable Income:">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="taxableIncomeLabel">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+                    </children>
+                    <VBox.margin>
+                        <Insets />
+                    </VBox.margin>
+                    <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    </padding>
+                </HBox>
+                <TableView fx:id="incomeTaxPaymentTable" fixedCellSize="25.0" focusTraversable="false" prefHeight="175.0" VBox.vgrow="NEVER">
+                    <columns>
+                        <TableColumn fx:id="filingStatusColumn" prefWidth="175.0" text="Filing Status" />
+                        <TableColumn text="Tax Owed">
+                            <columns>
+                                <TableColumn fx:id="totalTaxColumn" prefWidth="130.0" style="-fx-alignment: CENTER-RIGHT;" text="Total" />
+                                <TableColumn fx:id="totalTaxPerMonthColumn" prefWidth="130.0" style="-fx-alignment: CENTER-RIGHT;" text="Monthly" />
+                            </columns>
+                        </TableColumn>
+                        <TableColumn fx:id="incomeAfterTaxColumn" prefWidth="130.0" style="-fx-alignment: CENTER-RIGHT;" text="Income After Tax" />
+                    </columns>
+                    <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                    </columnResizePolicy>
+                </TableView>
+            </children>
+        </VBox>
+    </content>
+</TitledPane>

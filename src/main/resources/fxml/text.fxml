@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="412.0" prefWidth="1308.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.cerricks.evaluator.controller.MainController">
+    <top>
+
+    </top>
+    <center>
+        <SplitPane dividerPositions="0.5" focusTraversable="false" BorderPane.alignment="CENTER">
+            <items>
+                <BorderPane>
+                    <top>
+                        <GridPane hgap="20.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="100.0" BorderPane.alignment="CENTER">
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            </rowConstraints>
+                            <children>
+                                <VBox alignment="TOP_CENTER">
+                                    <children>
+                                        <Label text="Asking Price">
+                                            <font>
+                                                <Font name="System Bold" size="18.0" />
+                                            </font>
+                                            <VBox.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                            </VBox.margin>
+                                        </Label>
+                                        <HBox alignment="CENTER">
+                                            <children>                                                
+                                                <TextField fx:id="askingPriceField" alignment="CENTER_RIGHT" prefColumnCount="10">                                          
+                                                    <font>
+                                                        <Font size="18.0" />
+                                                    </font>
+                                                    <HBox.margin>
+                                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                    </HBox.margin>
+                                                </TextField>
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                </VBox>
+                                <VBox alignment="TOP_CENTER" prefHeight="115.0" prefWidth="306.0" GridPane.columnIndex="1">
+                                    <children>
+                                        <Label text="Down Payment">
+                                            <font>
+                                                <Font name="System Bold" size="18.0" />
+                                            </font>
+                                            <VBox.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                            </VBox.margin>
+                                        </Label>
+                                        <HBox alignment="CENTER">
+                                            <children>
+                                                <TextField fx:id="downPaymentField" alignment="CENTER_RIGHT" prefColumnCount="10">
+                                                    <font>
+                                                        <Font size="18.0" />
+                                                    </font>
+                                                    <HBox.margin>
+                                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                    </HBox.margin>
+                                                </TextField>
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                </VBox>
+                                <VBox alignment="TOP_CENTER" GridPane.columnIndex="2">
+                                    <children>
+                                        <Label text="Original Cash Flow">
+                                            <font>
+                                                <Font name="System Bold" size="18.0" />
+                                            </font>
+                                            <VBox.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                            </VBox.margin>
+                                        </Label>
+                                        <HBox alignment="CENTER">
+                                            <children>
+                                                <TextField fx:id="originalCashFlowField" alignment="CENTER_RIGHT" prefColumnCount="10">
+                                                    <font>
+                                                        <Font size="18.0" />
+                                                    </font>
+                                                    <HBox.margin>
+                                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                    </HBox.margin>
+                                                </TextField>
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                </VBox>
+                            </children>
+                            <padding>
+                                <Insets left="20.0" right="20.0" />
+                            </padding>
+                        </GridPane>
+                    </top>
+                    <bottom>
+                        <ButtonBar prefHeight="50.0" prefWidth="200.0" BorderPane.alignment="CENTER_RIGHT">
+                            <buttons>
+                                <Button focusTraversable="false" mnemonicParsing="false" onAction="#handleClear" text="Clear">
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                </Button>
+                            </buttons>
+                            <BorderPane.margin>
+                                <Insets right="10.0" />
+                            </BorderPane.margin>
+                        </ButtonBar>
+                    </bottom>
+                    <center>
+                        <VBox maxHeight="1.7976931348623157E308" BorderPane.alignment="CENTER">
+                            <children>
+                                <SplitPane dividerPositions="0.5" orientation="VERTICAL" VBox.vgrow="ALWAYS">
+                                    <items>
+                                        <TitledPane animated="false" collapsible="false" maxHeight="1.7976931348623157E308" minHeight="0.0" text="untitled 1">
+                                            <content>
+                                                <TableView>
+                                                    <columns>
+                                                        <TableColumn prefWidth="75.0" text="C1" />
+                                                        <TableColumn prefWidth="75.0" text="C2" />
+                                                    </columns>
+                                                </TableView>
+                                            </content>
+                                        </TitledPane>
+                                        <TitledPane animated="false" collapsible="false" maxHeight="1.7976931348623157E308" text="untitled 2">
+                                            <content>
+                                                <TableView>
+                                                    <columns>
+                                                        <TableColumn prefWidth="75.0" text="C1" />
+                                                        <TableColumn prefWidth="75.0" text="C2" />
+                                                    </columns>
+                                                </TableView>
+                                            </content>
+                                        </TitledPane>
+                                    </items>
+                                </SplitPane>
+                            </children>
+                        </VBox>
+                    </center>
+                </BorderPane>
+                <ScrollPane fitToWidth="true" focusTraversable="false" hbarPolicy="NEVER" minWidth="-Infinity" prefWidth="600.0">
+                    <content>
+                        <VBox>
+                            <children>
+                                                              
+                            </children>
+                        </VBox>
+                    </content>
+                </ScrollPane>
+            </items>
+        </SplitPane>
+    </center>
+</BorderPane>
