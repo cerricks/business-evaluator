@@ -25,7 +25,9 @@ import com.github.cerricks.evaluator.model.LoanTermUnit;
 import static com.github.cerricks.evaluator.model.LoanTermUnit.MONTHS;
 import static com.github.cerricks.evaluator.model.LoanTermUnit.YEARS;
 import com.github.cerricks.evaluator.ui.CustomPercentageStringConverter;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Spinner;
@@ -35,6 +37,8 @@ import javafx.scene.control.TextFormatter;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -50,6 +54,10 @@ public class InputCategoryEditDialogController {
     private Stage stage;
 
     private InputCategory inputCategory;
+
+    @Autowired
+    @Qualifier("inputCategories")
+    private ObservableList<InputCategory> inputCategories;
 
     @FXML
     private TextField nameField;
@@ -171,9 +179,12 @@ public class InputCategoryEditDialogController {
             defaultLoanLengthUnitField.getSelectionModel().select(YEARS);
         }
 
-        // prevent name from being modified on system properties
+        // prevent fields from being modified on system properties
         if (inputCategory.getSource() == SYSTEM) {
             nameField.setEditable(false);
+            nameField.setDisable(true);
+            typeField.setDisable(true);
+            additionalExpenseOption.setDisable(true);
         }
     }
 
@@ -248,7 +259,62 @@ public class InputCategoryEditDialogController {
 
             validInput = false;
         } else {
-            nameField.getStyleClass().remove("error");
+            String name = nameField.getText().toUpperCase();
+
+            for (InputCategory category : inputCategories) {
+                if (category.getName().toUpperCase().equals(name)) {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Warning");
+                    alert.setHeaderText("Invalid Name");
+                    alert.setContentText("An input already exists with a name matching [" + name + "]");
+
+                    alert.showAndWait();
+
+                    validInput = false;
+
+                    nameField.getStyleClass().add("error");
+
+                    break;
+                }
+            }
+
+            if (validInput) {
+                nameField.getStyleClass().remove("error");
+            }
+        }
+
+        if (typeField.getSelectionModel().getSelectedIndex() < 0) {
+            typeField.getStyleClass().add("error");
+
+            validInput = false;
+        } else {
+            typeField.getStyleClass().remove("error");
+        }
+
+        if (defaultFinancingOption.isSelected()) {
+            if (!StringUtils.hasText(defaultLoanRateField.getText())) {
+                defaultLoanRateField.getStyleClass().add("error");
+
+                validInput = false;
+            } else {
+                defaultLoanRateField.getStyleClass().remove("error");
+            }
+
+            if (defaultLoanLengthField.getValue() <= 0) {
+                defaultLoanLengthField.getStyleClass().add("error");
+
+                validInput = false;
+            } else {
+                defaultLoanLengthField.getStyleClass().remove("error");
+            }
+
+            if (defaultLoanLengthUnitField.getSelectionModel().getSelectedIndex() < 0) {
+                defaultLoanLengthUnitField.getStyleClass().add("error");
+
+                validInput = false;
+            } else {
+                defaultLoanLengthUnitField.getStyleClass().remove("error");
+            }
         }
 
         return validInput;

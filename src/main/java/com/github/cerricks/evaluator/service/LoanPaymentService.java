@@ -35,4 +35,6 @@ public interface LoanPaymentService {
 
     void removeLoanByName(String name);
 
+    void reset();
+
 }

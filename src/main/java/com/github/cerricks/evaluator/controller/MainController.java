@@ -17,6 +17,9 @@ package com.github.cerricks.evaluator.controller;
 
 import com.github.cerricks.evaluator.MainApp;
 import com.github.cerricks.evaluator.model.NamedProperties;
+import com.github.cerricks.evaluator.service.DebtRatioService;
+import com.github.cerricks.evaluator.service.IncomeTaxService;
+import com.github.cerricks.evaluator.service.LoanPaymentService;
 import com.github.cerricks.evaluator.ui.CustomCurrencyStringConverter;
 import java.text.NumberFormat;
 import javafx.application.Platform;
@@ -43,6 +46,15 @@ public class MainController {
 
     @Autowired
     private MainApp mainApp;
+
+    @Autowired
+    private DebtRatioService debtRatioService;
+
+    @Autowired
+    private IncomeTaxService incomeTaxService;
+
+    @Autowired
+    private LoanPaymentService loanPaymentService;
 
     @Autowired
     private NamedProperties namedProperties;
@@ -89,10 +101,8 @@ public class MainController {
 
         askingPriceField.textProperty().bindBidirectional(namedProperties.askingPriceProperty(), currencyStringConverter);
         askingPriceField.setTextFormatter(new TextFormatter(currencyStringConverter));
-
         downPaymentField.textProperty().bindBidirectional(namedProperties.downPaymentProperty(), currencyStringConverter);
         downPaymentField.setTextFormatter(new TextFormatter(currencyStringConverter));
-
         originalCashFlowField.textProperty().bindBidirectional(namedProperties.originalCashFlowProperty(), currencyStringConverter);
         originalCashFlowField.setTextFormatter(new TextFormatter(currencyStringConverter));
     }
@@ -102,6 +112,11 @@ public class MainController {
      */
     @FXML
     private void handleClear() {
+        namedProperties.reset();
+        debtRatioService.reset();
+        incomeTaxService.reset();
+        loanPaymentService.reset();
+
         // clear input fields
         askingPriceField.clear();
         downPaymentField.clear();

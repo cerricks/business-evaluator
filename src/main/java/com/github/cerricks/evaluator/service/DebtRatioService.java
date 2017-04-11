@@ -34,4 +34,6 @@ public interface DebtRatioService {
 
     void removeRatio(String name);
 
+    void reset();
+
 }

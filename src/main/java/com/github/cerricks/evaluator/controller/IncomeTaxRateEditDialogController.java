@@ -101,7 +101,7 @@ public class IncomeTaxRateEditDialogController {
             incomeTaxRate.setFilingStatus(filingStatus);
             incomeTaxRate.setTaxableIncomeRange(new NumberRange(incomeTaxFrom, incomeTaxTo, NumberFormat.getCurrencyInstance()));
             incomeTaxRate.setFlatTax(flatTax);
-            incomeTaxRate.setTaxRate(taxRate); // TODO: fix percentage???
+            incomeTaxRate.setTaxRate(taxRate);
 
             stage.close();
         }

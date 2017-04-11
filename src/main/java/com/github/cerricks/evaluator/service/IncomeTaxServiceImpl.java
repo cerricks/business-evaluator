@@ -98,4 +98,9 @@ public class IncomeTaxServiceImpl implements IncomeTaxService {
         return incomeTaxPayments;
     }
 
+    @Override
+    public void reset() {
+        incomeTaxPayments.clear();
+    }
+
 }

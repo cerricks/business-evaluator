@@ -48,6 +48,18 @@ public class NamedProperties {
     public NamedProperties() {
     }
 
+    public void reset() {
+        askingPriceProperty.set(0);
+        askingPriceBalanceProperty.set(0);
+        cashAfterTaxProperty.set(0);
+        downPaymentProperty.set(0);
+        originalCashFlowProperty.set(0);
+        taxableIncomeProperty.set(0);
+        totalAdditionalExpenseProperty.set(0);
+        totalLoanAmountProperty.set(0);
+        totalLoanPaymentProperty.set(0);
+    }
+
     public NamedProperty askingPriceProperty() {
         return askingPriceProperty;
     }

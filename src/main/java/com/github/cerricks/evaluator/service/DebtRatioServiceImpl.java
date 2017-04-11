@@ -85,9 +85,14 @@ public class DebtRatioServiceImpl implements DebtRatioService {
             ratio = it.next();
 
             if (ratio.getName().equals(name)) {
-                removeRatio(ratio);
+                it.remove();
             }
         }
+    }
+
+    @Override
+    public void reset() {
+        ratios.clear();
     }
 
 }

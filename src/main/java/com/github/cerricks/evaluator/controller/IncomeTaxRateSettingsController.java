@@ -217,7 +217,20 @@ public class IncomeTaxRateSettingsController {
             incomeTaxPaymentCalculator.setRateTable(newRateTable);
 
             incomeTaxRates.setAll(newRateTable.getRates());
+
+            incomeTaxRates_tmp.clear();
         }
+    }
+
+    public void cancel() {
+        incomeTaxRates_tmp.clear();
+
+        // revert any changes
+        IncomeTaxRateTable newRateTable = new IncomeTaxRateTable(incomeTaxRateRepository.findAll());
+
+        incomeTaxPaymentCalculator.setRateTable(newRateTable);
+
+        incomeTaxRates.setAll(newRateTable.getRates());
     }
 
 }

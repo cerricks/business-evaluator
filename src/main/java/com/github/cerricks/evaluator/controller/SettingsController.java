@@ -56,13 +56,20 @@ public class SettingsController {
 
     @FXML
     private void handleCancel() {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Reverting changes to settings");
+        }
+
+        incomeTaxRateSettingsController.cancel();
+        inputCategorySettingsController.cancel();
+
         stage.close();
     }
 
     @FXML
     private void handleSave() {
         if (logger.isDebugEnabled()) {
-            logger.debug("Saving settings");
+            logger.debug("Saving changes to settings");
         }
 
         // try to save income tax rate settings

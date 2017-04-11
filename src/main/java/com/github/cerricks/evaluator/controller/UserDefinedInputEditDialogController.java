@@ -25,6 +25,7 @@ import javafx.util.converter.NumberStringConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 /**
  * Handles editing user defined input table entries.
@@ -96,7 +97,7 @@ public class UserDefinedInputEditDialogController {
     private boolean isInputValid() {
         boolean validInput = true;
 
-        if (valueField.getText() == null || valueField.getText().length() == 0) {
+        if (!StringUtils.hasText(valueField.getText())) {
             valueField.getStyleClass().add("error");
 
             validInput = false;

@@ -177,6 +177,11 @@ public class LoanPaymentServiceImpl implements LoanPaymentService {
         }
     }
 
+    @Override
+    public void reset() {
+        loanPayments.clear();
+    }
+
     private LoanPayment findLoanPaymentByName(final String name) {
         for (LoanPayment loanPayment : loanPayments) {
             if (loanPayment.getCategory().getName().equals(name)) {

@@ -65,7 +65,6 @@ public class UserDefinedInputOverviewController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserDefinedInputOverviewController.class);
 
-    //private final DoubleProperty totalAdditionalCost = new SimpleDoubleProperty(0);
     @Autowired
     @Qualifier("inputCategories")
     private ObservableList<InputCategory> inputCategories;

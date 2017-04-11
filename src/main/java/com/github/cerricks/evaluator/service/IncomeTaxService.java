@@ -30,4 +30,6 @@ public interface IncomeTaxService {
 
     ObservableList<IncomeTaxPayment> getIncomeTaxPayments();
 
+    void reset();
+
 }
