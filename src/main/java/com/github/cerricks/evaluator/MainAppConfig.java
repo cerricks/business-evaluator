@@ -35,8 +35,6 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javax.annotation.PostConstruct;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -49,8 +47,6 @@ import org.springframework.data.domain.Sort;
  */
 @Configuration
 public class MainAppConfig {
-
-    private static final Logger logger = LoggerFactory.getLogger(MainAppConfig.class);
 
     @Autowired
     private IncomeTaxRateRepository incomeTaxRateRepository;
@@ -107,14 +103,14 @@ public class MainAppConfig {
         loanPaymentService.getLoanPayments().addListener((Change<? extends LoanPayment> c) -> {
             if (c.next()) {
                 // process debt payment for removed items
-                for (LoanPayment loanPayment : c.getRemoved()) {
+                c.getRemoved().forEach((loanPayment) -> {
                     debtRatioService.removeRatio(loanPayment.getCategory().getName());
-                }
+                });
 
                 // process debt payment for added items
-                for (LoanPayment loanPayment : c.getAddedSubList()) {
+                c.getAddedSubList().forEach((loanPayment) -> {
                     debtRatioService.createRatio(loanPayment.getCategory().getName(), loanPayment.annualPaymentProperty());
-                }
+                });
             }
         });
     }
