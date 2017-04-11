@@ -20,8 +20,7 @@ import java.text.NumberFormat;
 import javafx.util.converter.PercentageStringConverter;
 
 /**
- * A {@link PercentageStringConverter} that accepts input without a percent
- * symbol.
+ * A {@link PercentageStringConverter} that accepts input without a percent symbol.
  *
  * @author cerricks
  */
@@ -30,7 +29,7 @@ public class CustomPercentageStringConverter extends PercentageStringConverter {
     private static final NumberFormat percentageFormat = NumberFormat.getPercentInstance();
 
     static {
-        percentageFormat.setMaximumFractionDigits(4);
+        percentageFormat.setMaximumFractionDigits(2);
         percentageFormat.setRoundingMode(RoundingMode.HALF_UP);
     }
 

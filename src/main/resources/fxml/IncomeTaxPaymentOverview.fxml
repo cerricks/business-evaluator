@@ -70,7 +70,7 @@
                             </columns>
                         </TableColumn>
                         <TableColumn fx:id="incomeAfterTaxColumn" prefWidth="130.0" style="-fx-alignment: CENTER-RIGHT;" text="Income After Tax" />
-                        <TableColumn fx:id="percentageOfOriginalCashFlowColumn" prefWidth="70.0" style="-fx-alignment: CENTER-RIGHT;" text="% of Cash Flow" />
+                        <TableColumn fx:id="percentageOfOriginalCashFlowColumn" prefWidth="70.0" style="-fx-alignment: CENTER-RIGHT;" text="Percentage of Cash Flow" />
                     </columns>
                     <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
