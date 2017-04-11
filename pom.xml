@@ -124,7 +124,7 @@
                     </execution>
                 </executions>
             </plugin> 
-           
+           <!--
             <plugin>
                 <groupId>com.zenjava</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
@@ -182,6 +182,7 @@
                     </dependency>
                 </dependencies>
             </plugin> 
+            -->
         </plugins>
         <resources>
             <!-- copy fxml and css resources -->

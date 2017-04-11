@@ -26,16 +26,22 @@ public class IncomeTaxPayment {
     private final double totalTax;
     private final double totalTaxMonthly;
     private final double totalIncomeAfterTax;
+    private final double percentageOfOriginalCashFlow;
 
-    public IncomeTaxPayment(final FilingStatus filingStatus, final double totalTax, final double totalIncomeAfterTax) {
+    public IncomeTaxPayment(final FilingStatus filingStatus, final double totalTax, final double totalIncomeAfterTax, final double percentageOfOriginalCashFlow) {
         this.filingStatus = filingStatus;
         this.totalTax = totalTax;
         this.totalTaxMonthly = totalTax / 12;
         this.totalIncomeAfterTax = totalIncomeAfterTax;
+        this.percentageOfOriginalCashFlow = percentageOfOriginalCashFlow;
     }
 
     public FilingStatus getFilingStatus() {
         return filingStatus;
+    }
+
+    public double getPercentageOfOriginalCashFlow() {
+        return percentageOfOriginalCashFlow;
     }
 
     public double getTotalTax() {

@@ -63,15 +63,17 @@ public class IncomeTaxServiceImpl implements IncomeTaxService {
             for (FilingStatus filingStatus : FilingStatus.values()) {
                 try {
                     double incomeTax = incomeTaxCalculator.calculateTax(filingStatus, taxableIncome);
+                    double incomeAfterTax = taxableIncome - incomeTax;
+                    double percentageOfOriginalCashFlow = incomeAfterTax / namedProperties.originalCashFlowProperty().doubleValue();
 
-                    incomeTaxPayments.add(new IncomeTaxPayment(filingStatus, incomeTax, taxableIncome - incomeTax));
+                    incomeTaxPayments.add(new IncomeTaxPayment(filingStatus, incomeTax, incomeAfterTax, percentageOfOriginalCashFlow));
                 } catch (Exception ex) {
                     logger.warn(ex.getMessage());
                 }
             }
         } else {
             for (FilingStatus filingStatus : FilingStatus.values()) {
-                incomeTaxPayments.add(new IncomeTaxPayment(filingStatus, 0, taxableIncome));
+                incomeTaxPayments.add(new IncomeTaxPayment(filingStatus, 0, taxableIncome, 0));
             }
         }
 
@@ -91,6 +93,7 @@ public class IncomeTaxServiceImpl implements IncomeTaxService {
             double taxableIncome = originalCashFlow - totalLoanPayment;
 
             namedProperties.taxableIncomeProperty().set(taxableIncome);
+            namedProperties.percentageOfCashFlowProperty().set(taxableIncome / originalCashFlow);
         } catch (NumberFormatException ex) {
             logger.warn("Unable to calculate taxable income: " + ex.getMessage());
         }

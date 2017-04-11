@@ -20,6 +20,7 @@ import static com.github.cerricks.evaluator.Constants.PROPERTY_ASKING_PRICE_BALA
 import static com.github.cerricks.evaluator.Constants.PROPERTY_CASH_AFTER_TAX;
 import static com.github.cerricks.evaluator.Constants.PROPERTY_DOWN_PAYMENT;
 import static com.github.cerricks.evaluator.Constants.PROPERTY_ORIGINAL_CASH_FLOW;
+import static com.github.cerricks.evaluator.Constants.PROPERTY_PERCENTAGE_OF_CASH_FLOW;
 import static com.github.cerricks.evaluator.Constants.PROPERTY_TAXABLE_INCOME;
 import static com.github.cerricks.evaluator.Constants.PROPERTY_TOTAL_ADDITIONAL_EXPENSE;
 import static com.github.cerricks.evaluator.Constants.PROPERTY_TOTAL_LOAN_AMOUNT;
@@ -41,6 +42,7 @@ public class NamedProperties {
     private final NamedProperty cashAfterTaxProperty = new NamedProperty(PROPERTY_CASH_AFTER_TAX, 0);
     private final NamedProperty downPaymentProperty = new NamedProperty(PROPERTY_DOWN_PAYMENT);
     private final NamedProperty originalCashFlowProperty = new NamedProperty(PROPERTY_ORIGINAL_CASH_FLOW);
+    private final NamedProperty percentageOfCashFlowProperty = new NamedProperty(PROPERTY_PERCENTAGE_OF_CASH_FLOW, 0);
     private final NamedProperty taxableIncomeProperty = new NamedProperty(PROPERTY_TAXABLE_INCOME, 0);
     private final NamedProperty totalAdditionalExpenseProperty = new NamedProperty(PROPERTY_TOTAL_ADDITIONAL_EXPENSE, 0);
     private final NamedProperty totalLoanAmountProperty = new NamedProperty(PROPERTY_TOTAL_LOAN_AMOUNT, 0);
@@ -55,6 +57,7 @@ public class NamedProperties {
         cashAfterTaxProperty.set(0);
         downPaymentProperty.set(0);
         originalCashFlowProperty.set(0);
+        percentageOfCashFlowProperty.set(0);
         taxableIncomeProperty.set(0);
         totalAdditionalExpenseProperty.set(0);
         totalLoanAmountProperty.set(0);
@@ -79,6 +82,10 @@ public class NamedProperties {
 
     public NamedProperty originalCashFlowProperty() {
         return originalCashFlowProperty;
+    }
+
+    public NamedProperty percentageOfCashFlowProperty() {
+        return percentageOfCashFlowProperty;
     }
 
     public NamedProperty taxableIncomeProperty() {

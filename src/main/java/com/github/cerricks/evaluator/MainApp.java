@@ -136,7 +136,7 @@ public class MainApp extends Application {
     }
 
     /**
-     * Show dialog to create new {@link InputCategory}.
+     * Show dialog to create new input category.
      */
     public void showInputCategoryCreateDialog() {
         FXMLLoader loader = fxmlLoaderService.getLoader(getClass().getResource(FXML_INPUT_CATEGORY_CREATE_DIALOG));
@@ -171,7 +171,7 @@ public class MainApp extends Application {
     }
 
     /**
-     * Show dialog to edit existing {@link InputCategory}.
+     * Show dialog to edit existing input category.
      *
      * @param inputCategory the item to edit.
      */
@@ -209,7 +209,7 @@ public class MainApp extends Application {
     }
 
     /**
-     * Show dialog to edit existing {@link IncomeTaxRate}.
+     * Show dialog to edit existing income tax rate.
      *
      * @param incomeTaxRate the item to edit.
      */
@@ -247,7 +247,7 @@ public class MainApp extends Application {
     }
 
     /**
-     * Show dialog to edit existing {@link LoanPayment}.
+     * Show dialog to edit existing loan payment.
      *
      * @param loanPayment the item to edit.
      */
@@ -321,7 +321,7 @@ public class MainApp extends Application {
     }
 
     /**
-     * Shoe dialog to create new user defined {@link Input}.
+     * Shoe dialog to create new user defined input.
      */
     public void showUserDefinedInputCreateDialog() {
         FXMLLoader loader = fxmlLoaderService.getLoader(getClass().getResource(FXML_USER_DEFINED_INPUT_CREATE_DIALOG));
@@ -356,9 +356,9 @@ public class MainApp extends Application {
     }
 
     /**
-     * Show dialog to edit existing user defined {@link Input}.
+     * Show dialog to edit existing user defined input.
      *
-     * @param userDefinedInput the input to edit.
+     * @param input the input to edit.
      */
     public void showUserDefinedInputEditDialog(final Input input) {
         FXMLLoader loader = fxmlLoaderService.getLoader(getClass().getResource(FXML_USER_DEFINED_INPUT_EDIT_DIALOG));

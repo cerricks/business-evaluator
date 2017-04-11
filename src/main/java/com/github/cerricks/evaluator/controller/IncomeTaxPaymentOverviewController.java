@@ -21,6 +21,8 @@ import com.github.cerricks.evaluator.model.NamedProperties;
 import com.github.cerricks.evaluator.service.IncomeTaxService;
 import com.github.cerricks.evaluator.ui.CurrencyTableCellFormatter;
 import com.github.cerricks.evaluator.ui.CustomCurrencyStringConverter;
+import com.github.cerricks.evaluator.ui.CustomPercentageStringConverter;
+import com.github.cerricks.evaluator.ui.PercentageTableCellFormatter;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -51,6 +53,9 @@ public class IncomeTaxPaymentOverviewController {
     private Label taxableIncomeLabel;
 
     @FXML
+    private Label percentageOfCashFlowLabel;
+
+    @FXML
     private TableView<IncomeTaxPayment> incomeTaxPaymentTable;
 
     @FXML
@@ -65,6 +70,9 @@ public class IncomeTaxPaymentOverviewController {
     @FXML
     private TableColumn<IncomeTaxPayment, Double> incomeAfterTaxColumn;
 
+    @FXML
+    private TableColumn<IncomeTaxPayment, Double> percentageOfOriginalCashFlowColumn;
+
     public IncomeTaxPaymentOverviewController() {
     }
 
@@ -75,6 +83,7 @@ public class IncomeTaxPaymentOverviewController {
         }
 
         taxableIncomeLabel.textProperty().bindBidirectional(namedProperties.taxableIncomeProperty(), new CustomCurrencyStringConverter());
+        percentageOfCashFlowLabel.textProperty().bindBidirectional(namedProperties.percentageOfCashFlowProperty(), new CustomPercentageStringConverter()); // TODO: fix property here
 
         // configure table
         incomeTaxPaymentTable.setItems(incomeTaxService.getIncomeTaxPayments());
@@ -87,6 +96,8 @@ public class IncomeTaxPaymentOverviewController {
         totalTaxPerMonthColumn.setCellFactory(new CurrencyTableCellFormatter());
         incomeAfterTaxColumn.setCellValueFactory(new PropertyValueFactory("totalIncomeAfterTax"));
         incomeAfterTaxColumn.setCellFactory(new CurrencyTableCellFormatter());
+        percentageOfOriginalCashFlowColumn.setCellValueFactory(new PropertyValueFactory("percentageOfOriginalCashFlow"));
+        percentageOfOriginalCashFlowColumn.setCellFactory(new PercentageTableCellFormatter());
     }
 
 }

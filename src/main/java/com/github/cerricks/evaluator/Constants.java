@@ -38,6 +38,7 @@ public class Constants {
     public static final String PROPERTY_CASH_AFTER_TAX = "Cash After Tax";
     public static final String PROPERTY_DOWN_PAYMENT = "Down Payment";
     public static final String PROPERTY_ORIGINAL_CASH_FLOW = "Original Cash Flow";
+    public static final String PROPERTY_PERCENTAGE_OF_CASH_FLOW = "Percentage of Original Cash Flow";
     public static final String PROPERTY_TAXABLE_INCOME = "Taxable Income";
     public static final String PROPERTY_TOTAL_ADDITIONAL_EXPENSE = "Total Additional Cost";
     public static final String PROPERTY_TOTAL_LOAN_AMOUNT = "Total Loan Amount";
