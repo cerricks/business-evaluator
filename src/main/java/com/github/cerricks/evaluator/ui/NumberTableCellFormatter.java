@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 cerricks.
+ * Copyright 2017 Clifford Errickson.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,22 +19,24 @@ import java.math.RoundingMode;
 import java.text.NumberFormat;
 
 /**
- * A {@link TableCellFormatter} for formatting a table cell value as a currency.
+ * A {@link TableCellFormatter} for formatting a table cell value as a generic
+ * number.
  *
  * @author cerricks
  * @param <S> The type of the TableView generic type (i.e. S ==
  * TableView&lt;S&gt;)
  */
-public class CurrencyTableCellFormatter<S> extends TableCellFormatter<S, Double> {
+public class NumberTableCellFormatter<S> extends TableCellFormatter<S, Double> {
 
-    private static final NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
+    private static final NumberFormat numberFormat = NumberFormat.getNumberInstance();
 
     static {
-        currencyFormat.setRoundingMode(RoundingMode.HALF_UP);
+        numberFormat.setMaximumFractionDigits(2);
+        numberFormat.setRoundingMode(RoundingMode.HALF_UP);
     }
 
-    public CurrencyTableCellFormatter() {
-        super(currencyFormat);
+    public NumberTableCellFormatter() {
+        super(numberFormat);
     }
 
 }

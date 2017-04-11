@@ -16,12 +16,12 @@
 package com.github.cerricks.evaluator.controller;
 
 import com.github.cerricks.evaluator.model.Input;
-import com.github.cerricks.evaluator.ui.CustomCurrencyStringConverter;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.stage.Stage;
+import javafx.util.converter.NumberStringConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -44,7 +44,7 @@ public class UserDefinedInputEditDialogController {
     private Label categoryLabel;
 
     @FXML
-    private TextField amountField;
+    private TextField valueField;
 
     public UserDefinedInputEditDialogController() {
     }
@@ -55,7 +55,7 @@ public class UserDefinedInputEditDialogController {
             logger.debug("Initializing: UserDefinedInputEditDialogController");
         }
 
-        amountField.setTextFormatter(new TextFormatter(new CustomCurrencyStringConverter()));
+        valueField.setTextFormatter(new TextFormatter(new NumberStringConverter()));
     }
 
     public void setStage(final Stage stage) {
@@ -71,13 +71,13 @@ public class UserDefinedInputEditDialogController {
         this.userDefinedInput = userDefinedInput;
 
         categoryLabel.setText(userDefinedInput.getName());
-        amountField.setText(Double.toString(userDefinedInput.getValue()));
+        valueField.setText(Double.toString(userDefinedInput.getValue()));
     }
 
     @FXML
     private void handleOk() {
         if (isInputValid()) {
-            userDefinedInput.setValue(Double.valueOf(amountField.getTextFormatter().getValue().toString()));
+            userDefinedInput.setValue(Double.valueOf(valueField.getTextFormatter().getValue().toString()));
 
             stage.close();
         }
@@ -96,12 +96,12 @@ public class UserDefinedInputEditDialogController {
     private boolean isInputValid() {
         boolean validInput = true;
 
-        if (amountField.getText() == null || amountField.getText().length() == 0) {
-            amountField.getStyleClass().add("error");
+        if (valueField.getText() == null || valueField.getText().length() == 0) {
+            valueField.getStyleClass().add("error");
 
             validInput = false;
         } else {
-            amountField.getStyleClass().remove("error");
+            valueField.getStyleClass().remove("error");
         }
 
         return validInput;

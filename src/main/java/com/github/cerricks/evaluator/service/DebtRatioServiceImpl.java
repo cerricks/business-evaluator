@@ -16,14 +16,14 @@
 package com.github.cerricks.evaluator.service;
 
 import com.github.cerricks.evaluator.model.DebtRatio;
-import com.github.cerricks.evaluator.model.NamedProperty;
+import com.github.cerricks.evaluator.model.NamedProperties;
 import java.util.Iterator;
 import javafx.beans.property.DoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javax.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -38,55 +38,27 @@ public class DebtRatioServiceImpl implements DebtRatioService {
 
     private final ObservableList<DebtRatio> ratios;
 
-    private NamedProperty originalCashFlowProperty;
-
-    private NamedProperty cashAfterTaxProperty;
+    @Autowired
+    private NamedProperties namedProperties;
 
     public DebtRatioServiceImpl() {
         ratios = FXCollections.observableArrayList();
     }
 
-    @PostConstruct
-    public void init() {
-        if (originalCashFlowProperty == null) {
-            throw new IllegalStateException("originalCashFlowProperty cannot be null");
-        }
-
-        if (cashAfterTaxProperty == null) {
-            throw new IllegalStateException("originalCashFlowProperty cannot be null");
-        }
-    }
-
-    public NamedProperty getOriginalCashFlowProperty() {
-        return originalCashFlowProperty;
-    }
-
-    public void setOriginalCashFlowProperty(NamedProperty originalCashFlowProperty) {
-        this.originalCashFlowProperty = originalCashFlowProperty;
-    }
-
-    public NamedProperty getCashAfterTaxProperty() {
-        return cashAfterTaxProperty;
-    }
-
-    public void setCashAfterTaxProperty(NamedProperty cashAfterTaxProperty) {
-        this.cashAfterTaxProperty = cashAfterTaxProperty;
-    }
-
     @Override
-    public DebtRatio createRatio(final DoubleProperty property) {
+    public DebtRatio createRatio(final String name, final DoubleProperty property) {
         // check if ratio already exists
         for (DebtRatio ratio : ratios) {
-            if (ratio.getName().equals(property.getName())) {
+            if (ratio.getName().equals(name)) {
                 if (logger.isDebugEnabled()) {
-                    logger.debug("Debt ratio already exists for property with name [" + property.getName() + "]");
+                    logger.debug("Debt ratio already exists for property with name [" + name + "]");
                 }
 
                 return null;
             }
         }
 
-        DebtRatio ratio = new DebtRatio(property, originalCashFlowProperty, cashAfterTaxProperty);
+        DebtRatio ratio = new DebtRatio(name, property, namedProperties.originalCashFlowProperty(), namedProperties.cashAfterTaxProperty());
 
         ratios.add(ratio);
 
@@ -104,7 +76,7 @@ public class DebtRatioServiceImpl implements DebtRatioService {
     }
 
     @Override
-    public void removeRatio(final DoubleProperty property) {
+    public void removeRatio(final String name) {
         Iterator<DebtRatio> it = ratios.iterator();
 
         DebtRatio ratio;
@@ -112,7 +84,7 @@ public class DebtRatioServiceImpl implements DebtRatioService {
         while (it.hasNext()) {
             ratio = it.next();
 
-            if (ratio.getName().equals(property.getName())) {
+            if (ratio.getName().equals(name)) {
                 removeRatio(ratio);
             }
         }

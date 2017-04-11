@@ -16,6 +16,7 @@
 package com.github.cerricks.evaluator;
 
 import static com.github.cerricks.evaluator.Constants.FXML_INCOME_TAX_RATE_EDIT_DIALOG;
+import static com.github.cerricks.evaluator.Constants.FXML_INPUT_CATEGORY_CREATE_DIALOG;
 import static com.github.cerricks.evaluator.Constants.FXML_INPUT_CATEGORY_EDIT_DIALOG;
 import static com.github.cerricks.evaluator.Constants.FXML_LOAN_PAYMENT_EDIT_DIALOG;
 import static com.github.cerricks.evaluator.Constants.FXML_MAIN;
@@ -24,6 +25,7 @@ import static com.github.cerricks.evaluator.Constants.FXML_USER_DEFINED_INPUT_CR
 import static com.github.cerricks.evaluator.Constants.FXML_USER_DEFINED_INPUT_EDIT_DIALOG;
 import static com.github.cerricks.evaluator.Constants.STYLESHEET_DEFAULT;
 import com.github.cerricks.evaluator.controller.IncomeTaxRateEditDialogController;
+import com.github.cerricks.evaluator.controller.InputCategoryCreateDialogController;
 import com.github.cerricks.evaluator.controller.InputCategoryEditDialogController;
 import com.github.cerricks.evaluator.controller.LoanPaymentEditDialogController;
 import com.github.cerricks.evaluator.controller.SettingsController;
@@ -190,6 +192,38 @@ public class MainApp extends Application {
         UserDefinedInputEditDialogController controller = loader.getController();
         controller.setStage(stage);
         controller.setUserDefinedInput(userDefinedInput);
+
+        stage.showAndWait();
+    }
+
+    public void showInputCategoryCreateDialog() {
+        FXMLLoader loader = fxmlLoaderService.getLoader(getClass().getResource(FXML_INPUT_CATEGORY_CREATE_DIALOG));
+
+        Parent page;
+
+        try {
+            page = loader.load();
+        } catch (IOException ex) {
+            logger.warn("Failed to load: " + FXML_INPUT_CATEGORY_CREATE_DIALOG, ex);
+
+            return;
+        }
+
+        // set the stage
+        Stage stage = new Stage();
+        stage.setTitle("Create Input Category");
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.centerOnScreen();
+        stage.initOwner(mainStage);
+
+        Scene scene = new Scene(page);
+        scene.getStylesheets().add(getClass().getResource(STYLESHEET_DEFAULT).toExternalForm());
+
+        stage.setScene(scene);
+
+        // Set the item into the controller.
+        InputCategoryCreateDialogController controller = loader.getController();
+        controller.setStage(stage);
 
         stage.showAndWait();
     }

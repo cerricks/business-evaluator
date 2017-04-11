@@ -15,17 +15,11 @@
  */
 package com.github.cerricks.evaluator.service;
 
-import static com.github.cerricks.evaluator.Constants.PROPERTY_CASH_AFTER_TAX;
-import static com.github.cerricks.evaluator.Constants.PROPERTY_ORIGINAL_CASH_FLOW;
-import static com.github.cerricks.evaluator.Constants.PROPERTY_TAXABLE_INCOME;
-import static com.github.cerricks.evaluator.Constants.PROPERTY_TOTAL_LOAN_PAYMENT;
 import com.github.cerricks.evaluator.model.FilingStatus;
 import static com.github.cerricks.evaluator.model.FilingStatus.SINGLE;
 import com.github.cerricks.evaluator.model.IncomeTaxPayment;
-import com.github.cerricks.evaluator.model.NamedProperty;
-import com.github.cerricks.evaluator.util.FormatUtil;
+import com.github.cerricks.evaluator.model.NamedProperties;
 import com.github.cerricks.evaluator.util.IncomeTaxPaymentCalculator;
-import java.util.Map;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.slf4j.Logger;
@@ -42,13 +36,13 @@ public class IncomeTaxServiceImpl implements IncomeTaxService {
 
     private static final Logger logger = LoggerFactory.getLogger(IncomeTaxServiceImpl.class);
 
+    private final ObservableList<IncomeTaxPayment> incomeTaxPayments;
+
+    @Autowired
+    private NamedProperties namedProperties;
+
     @Autowired
     private IncomeTaxPaymentCalculator incomeTaxCalculator;
-
-    @Autowired
-    private Map<String, NamedProperty> properties;
-
-    private final ObservableList<IncomeTaxPayment> incomeTaxPayments;
 
     public IncomeTaxServiceImpl() {
         incomeTaxPayments = FXCollections.observableArrayList();
@@ -60,7 +54,7 @@ public class IncomeTaxServiceImpl implements IncomeTaxService {
 
         calculateTaxableIncome();
 
-        double taxableIncome = properties.get(PROPERTY_TAXABLE_INCOME).doubleValue();
+        double taxableIncome = namedProperties.taxableIncomeProperty().doubleValue();
 
         if (taxableIncome > 0) {
             for (FilingStatus filingStatus : FilingStatus.values()) {
@@ -72,33 +66,28 @@ public class IncomeTaxServiceImpl implements IncomeTaxService {
                     logger.warn(ex.getMessage());
                 }
             }
+        } else {
+            for (FilingStatus filingStatus : FilingStatus.values()) {
+                incomeTaxPayments.add(new IncomeTaxPayment(filingStatus, 0, taxableIncome));
+            }
         }
 
         for (IncomeTaxPayment incomeTaxPayment : incomeTaxPayments) {
             if (incomeTaxPayment.getFilingStatus() == SINGLE) {
-                properties.get(PROPERTY_CASH_AFTER_TAX).set(incomeTaxPayment.getTotalIncomeAfterTax()); // TODO: fix this
+                namedProperties.cashAfterTaxProperty().set(incomeTaxPayment.getTotalIncomeAfterTax()); // TODO: fix this
             }
         }
     }
 
     @Override
     public void calculateTaxableIncome() {
-        if (logger.isDebugEnabled()) {
-            logger.debug("recalculating taxable income");
-        }
-
         try {
-            double originalCashFlow = properties.get(PROPERTY_ORIGINAL_CASH_FLOW).doubleValue();
-            double totalLoanPayment = properties.get(PROPERTY_TOTAL_LOAN_PAYMENT).doubleValue();
+            double originalCashFlow = namedProperties.originalCashFlowProperty().doubleValue();
+            double totalLoanPayment = namedProperties.totalLoanPaymentProperty().doubleValue();
 
             double taxableIncome = originalCashFlow - totalLoanPayment;
 
-            if (logger.isDebugEnabled()) {
-                logger.debug("totalLoanPayment: " + FormatUtil.formatCurrency(totalLoanPayment));
-                logger.debug("Calculated taxable income: " + FormatUtil.formatCurrency(taxableIncome));
-            }
-
-            properties.get(PROPERTY_TAXABLE_INCOME).set(taxableIncome);
+            namedProperties.taxableIncomeProperty().set(taxableIncome);
         } catch (NumberFormatException ex) {
             logger.warn("Unable to calculate taxable income: " + ex.getMessage());
         }

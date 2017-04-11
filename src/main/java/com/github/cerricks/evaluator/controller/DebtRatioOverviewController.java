@@ -17,10 +17,10 @@ package com.github.cerricks.evaluator.controller;
 
 import com.github.cerricks.evaluator.model.DebtRatio;
 import com.github.cerricks.evaluator.service.DebtRatioService;
-import com.github.cerricks.evaluator.ui.TableCellFormatter;
+import com.github.cerricks.evaluator.ui.NumberTableCellFormatter;
+import com.github.cerricks.evaluator.ui.PercentageTableCellFormatter;
 import com.github.cerricks.evaluator.ui.TableRowMoveDownEventHandler;
 import com.github.cerricks.evaluator.ui.TableRowMoveUpEventHandler;
-import java.text.NumberFormat;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -111,16 +111,16 @@ public class DebtRatioOverviewController {
         nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
 
         preDebtMultipleColumn.setCellValueFactory(cellData -> cellData.getValue().preDebtMultipleProperty().asObject());
-        preDebtMultipleColumn.setCellFactory(new TableCellFormatter(NumberFormat.getNumberInstance()));
+        preDebtMultipleColumn.setCellFactory(new NumberTableCellFormatter());
 
         preDebtPercentageColumn.setCellValueFactory(cellData -> cellData.getValue().preDebtPercentageProperty().asObject());
-        preDebtPercentageColumn.setCellFactory(new TableCellFormatter(NumberFormat.getPercentInstance()));
+        preDebtPercentageColumn.setCellFactory(new PercentageTableCellFormatter());
 
         postTaxMultipleColumn.setCellValueFactory(cellData -> cellData.getValue().postTaxMultipleProperty().asObject());
-        postTaxMultipleColumn.setCellFactory(new TableCellFormatter(NumberFormat.getNumberInstance()));
+        postTaxMultipleColumn.setCellFactory(new NumberTableCellFormatter());
 
         postTaxPercentageColumn.setCellValueFactory(cellData -> cellData.getValue().postTaxPercentageProperty().asObject());
-        postTaxPercentageColumn.setCellFactory(new TableCellFormatter(NumberFormat.getPercentInstance()));
+        postTaxPercentageColumn.setCellFactory(new PercentageTableCellFormatter());
     }
 
 }

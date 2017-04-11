@@ -25,6 +25,7 @@ public class Constants {
     // FXML files names
     public static final String FXML_MAIN = "/fxml/Main.fxml";
     public static final String FXML_INCOME_TAX_RATE_EDIT_DIALOG = "/fxml/IncomeTaxRateEditDialog.fxml";
+    public static final String FXML_INPUT_CATEGORY_CREATE_DIALOG = "/fxml/InputCategoryCreateDialog.fxml";
     public static final String FXML_INPUT_CATEGORY_EDIT_DIALOG = "/fxml/InputCategoryEditDialog.fxml";
     public static final String FXML_LOAN_PAYMENT_EDIT_DIALOG = "/fxml/LoanPaymentEditDialog.fxml";
     public static final String FXML_SETTINGS = "/fxml/Settings.fxml";

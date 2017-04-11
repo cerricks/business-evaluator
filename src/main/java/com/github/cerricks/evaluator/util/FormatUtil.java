@@ -38,7 +38,7 @@ public class FormatUtil {
 
         // initialize generic number format
         numberFormat = NumberFormat.getNumberInstance();
-        numberFormat.setMaximumFractionDigits(4);
+        numberFormat.setMaximumFractionDigits(2);
         numberFormat.setRoundingMode(RoundingMode.HALF_UP);
 
         // initialize percentage format

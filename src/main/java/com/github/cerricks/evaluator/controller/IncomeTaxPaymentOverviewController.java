@@ -15,14 +15,12 @@
  */
 package com.github.cerricks.evaluator.controller;
 
-import static com.github.cerricks.evaluator.Constants.PROPERTY_TAXABLE_INCOME;
 import com.github.cerricks.evaluator.model.FilingStatus;
 import com.github.cerricks.evaluator.model.IncomeTaxPayment;
-import com.github.cerricks.evaluator.model.NamedProperty;
+import com.github.cerricks.evaluator.model.NamedProperties;
 import com.github.cerricks.evaluator.service.IncomeTaxService;
 import com.github.cerricks.evaluator.ui.CurrencyTableCellFormatter;
 import com.github.cerricks.evaluator.ui.CustomCurrencyStringConverter;
-import java.util.Map;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -47,7 +45,7 @@ public class IncomeTaxPaymentOverviewController {
     private IncomeTaxService incomeTaxService;
 
     @Autowired
-    private Map<String, NamedProperty> properties;
+    private NamedProperties namedProperties;
 
     @FXML
     private Label taxableIncomeLabel;
@@ -76,7 +74,7 @@ public class IncomeTaxPaymentOverviewController {
             logger.debug("Initializing: IncomeTaxPaymentOverviewController");
         }
 
-        taxableIncomeLabel.textProperty().bindBidirectional(properties.get(PROPERTY_TAXABLE_INCOME), new CustomCurrencyStringConverter());
+        taxableIncomeLabel.textProperty().bindBidirectional(namedProperties.taxableIncomeProperty(), new CustomCurrencyStringConverter());
 
         // configure table
         incomeTaxPaymentTable.setItems(incomeTaxService.getIncomeTaxPayments());

@@ -15,20 +15,17 @@
  */
 package com.github.cerricks.evaluator.controller;
 
-import static com.github.cerricks.evaluator.Constants.PROPERTY_TOTAL_ADDITIONAL_EXPENSE;
 import com.github.cerricks.evaluator.MainApp;
 import com.github.cerricks.evaluator.dao.InputCategoryRepository;
 import com.github.cerricks.evaluator.model.Input;
 import com.github.cerricks.evaluator.model.InputCategory;
 import static com.github.cerricks.evaluator.model.InputSource.USER;
 import com.github.cerricks.evaluator.model.InputType;
-import com.github.cerricks.evaluator.model.NamedProperty;
-import com.github.cerricks.evaluator.service.DebtRatioService;
+import com.github.cerricks.evaluator.model.NamedProperties;
 import com.github.cerricks.evaluator.service.IncomeTaxService;
 import com.github.cerricks.evaluator.service.LoanPaymentService;
 import com.github.cerricks.evaluator.ui.CustomCurrencyStringConverter;
 import com.github.cerricks.evaluator.util.FormatUtil;
-import java.util.Map;
 import java.util.Optional;
 import javafx.beans.binding.Bindings;
 import javafx.collections.ListChangeListener.Change;
@@ -78,13 +75,10 @@ public class UserDefinedInputOverviewController {
     private ObservableList<InputCategory> userDefinedInputCategories;
 
     @Autowired
-    private Map<String, NamedProperty> properties;
+    private NamedProperties namedProperties;
 
     @Autowired
     private ObservableList<Input> userDefinedInputs;
-
-    @Autowired
-    private DebtRatioService debtRatioService;
 
     @Autowired
     private MainApp mainApp;
@@ -128,7 +122,7 @@ public class UserDefinedInputOverviewController {
             logger.debug("Initializing: UserDefinedInputOverviewController");
         }
 
-        totalAdditionalCostLabel.textProperty().bindBidirectional(properties.get(PROPERTY_TOTAL_ADDITIONAL_EXPENSE), new CustomCurrencyStringConverter());
+        totalAdditionalCostLabel.textProperty().bindBidirectional(namedProperties.totalAdditionalExpenseProperty(), new CustomCurrencyStringConverter());
 
         userDefinedInputs.addListener((Change<? extends Input> change) -> {
             calculateTotalAdditionalCost();
@@ -273,8 +267,6 @@ public class UserDefinedInputOverviewController {
             loanPaymentService.processDefaultLoan(category.getName(), amount);
         }
 
-        debtRatioService.createRatio(customInput.valueProperty());
-
         clearInput();
     }
 
@@ -284,7 +276,7 @@ public class UserDefinedInputOverviewController {
     public void reset() {
         clearInput();
 
-        properties.get(PROPERTY_TOTAL_ADDITIONAL_EXPENSE).set(0);
+        namedProperties.totalAdditionalExpenseProperty().set(0);
         userDefinedInputs.clear();
     }
 
@@ -308,7 +300,7 @@ public class UserDefinedInputOverviewController {
             }
         }
 
-        properties.get(PROPERTY_TOTAL_ADDITIONAL_EXPENSE).set(total);
+        namedProperties.totalAdditionalExpenseProperty().set(total);
     }
 
 }

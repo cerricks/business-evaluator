@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 cerricks.
+ * Copyright 2017 Clifford Errickson.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,13 +16,12 @@
 package com.github.cerricks.evaluator.controller;
 
 import com.github.cerricks.evaluator.model.InputCategory;
-import static com.github.cerricks.evaluator.model.InputSource.SYSTEM;
+import static com.github.cerricks.evaluator.model.InputSource.USER;
 import com.github.cerricks.evaluator.model.InputType;
 import static com.github.cerricks.evaluator.model.InputType.CURRENCY;
 import com.github.cerricks.evaluator.model.LoanRate;
 import com.github.cerricks.evaluator.model.LoanTerm;
 import com.github.cerricks.evaluator.model.LoanTermUnit;
-import static com.github.cerricks.evaluator.model.LoanTermUnit.MONTHS;
 import static com.github.cerricks.evaluator.model.LoanTermUnit.YEARS;
 import com.github.cerricks.evaluator.ui.CustomPercentageStringConverter;
 import javafx.fxml.FXML;
@@ -35,21 +34,22 @@ import javafx.scene.control.TextFormatter;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 /**
  *
  * @author cerricks
  */
 @Component
-public class InputCategoryEditDialogController {
+public class InputCategoryCreateDialogController {
 
-    private static final Logger logger = LoggerFactory.getLogger(InputCategoryEditDialogController.class);
+    private static final Logger logger = LoggerFactory.getLogger(InputCategoryCreateDialogController.class);
 
     private Stage stage;
 
-    private InputCategory inputCategory;
+    @Autowired
+    private InputCategorySettingsController inputCategorySettingsController;
 
     @FXML
     private TextField nameField;
@@ -72,13 +72,13 @@ public class InputCategoryEditDialogController {
     @FXML
     private ChoiceBox<LoanTermUnit> defaultLoanLengthUnitField;
 
-    public InputCategoryEditDialogController() {
+    public InputCategoryCreateDialogController() {
     }
 
     @FXML
-    public void initialize() {
+    private void initialize() {
         if (logger.isDebugEnabled()) {
-            logger.debug("Initializing: InputCategoryEditDialogController");
+            logger.debug("Initializing: InputCategoryCreateDialogController");
         }
 
         typeField.getItems().addAll(InputType.values());
@@ -147,39 +147,6 @@ public class InputCategoryEditDialogController {
         this.stage = stage;
     }
 
-    public void setInputCategory(final InputCategory inputCategory) {
-        this.inputCategory = inputCategory;
-
-        nameField.setText(this.inputCategory.getName());
-        typeField.setValue(inputCategory.getType());
-
-        additionalExpenseOption.setSelected(inputCategory.isAdditionalExpense());
-
-        if (inputCategory.getDefaultLoanRate() != null) {
-            defaultFinancingOption.setSelected(true);
-
-            LoanRate defaultLoanRate = inputCategory.getDefaultLoanRate();
-
-            defaultLoanRateField.setText(Double.toString(defaultLoanRate.getRate() * 100));
-            defaultLoanLengthField.getValueFactory().setValue(defaultLoanRate.getTerm().getLength());
-            defaultLoanLengthUnitField.setValue(defaultLoanRate.getTerm().getUnit());
-        } else {
-            defaultFinancingOption.setSelected(false);
-
-            defaultLoanRateField.setText(null);
-            defaultLoanLengthField.getValueFactory().setValue(1);
-            defaultLoanLengthUnitField.getSelectionModel().select(YEARS);
-        }
-
-        // prevent name from being modified on system properties
-        if (inputCategory.getSource() == SYSTEM) {
-            nameField.setEditable(false);
-        }
-    }
-
-    /**
-     * Called when the user clicks OK.
-     */
     @FXML
     private void handleOk() {
         if (isInputValid()) {
@@ -215,21 +182,21 @@ public class InputCategoryEditDialogController {
                 }
             }
 
-            if (inputCategory.getSource() != SYSTEM) {
-                inputCategory.setName(name);
+            InputCategory category = new InputCategory(name, type);
+            category.setSource(USER);
+
+            category.setAdditionalExpense(additionalExpense);
+
+            if (defaultLoanRate != null) {
+                category.setDefaultLoanRate(defaultLoanRate);
             }
 
-            inputCategory.setType(type);
-            inputCategory.setAdditionalExpense(additionalExpense);
-            inputCategory.setDefaultLoanRate(defaultLoanRate);
+            inputCategorySettingsController.addTemporaryItem(category);
 
             stage.close();
         }
     }
 
-    /**
-     * Called when the user clicks cancel.
-     */
     @FXML
     private void handleCancel() {
         stage.close();
@@ -243,14 +210,8 @@ public class InputCategoryEditDialogController {
     private boolean isInputValid() {
         boolean validInput = true;
 
-        if (!StringUtils.hasText(nameField.getText())) {
-            nameField.getStyleClass().add("error");
-
-            validInput = false;
-        } else {
-            nameField.getStyleClass().remove("error");
-        }
-
+        // TODO: add validation
+        // TOD check if name already exists
         return validInput;
     }
 

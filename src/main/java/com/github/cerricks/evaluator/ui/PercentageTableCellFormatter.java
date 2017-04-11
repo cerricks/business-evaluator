@@ -23,7 +23,8 @@ import java.text.NumberFormat;
  * percentage.
  *
  * @author cerricks
- * @param <S> cell type
+ * @param <S> The type of the TableView generic type (i.e. S ==
+ * TableView&lt;S&gt;)
  */
 public class PercentageTableCellFormatter<S> extends TableCellFormatter<S, Double> {
 
@@ -31,7 +32,7 @@ public class PercentageTableCellFormatter<S> extends TableCellFormatter<S, Doubl
 
     static {
         percentageFormat.setRoundingMode(RoundingMode.HALF_UP);
-        percentageFormat.setMaximumFractionDigits(4);
+        percentageFormat.setMaximumFractionDigits(2);
     }
 
     public PercentageTableCellFormatter() {

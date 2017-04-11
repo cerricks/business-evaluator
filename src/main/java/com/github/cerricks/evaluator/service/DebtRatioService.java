@@ -26,12 +26,12 @@ import javafx.collections.ObservableList;
  */
 public interface DebtRatioService {
 
-    DebtRatio createRatio(DoubleProperty property);
+    DebtRatio createRatio(String name, DoubleProperty property);
 
     ObservableList<DebtRatio> getRatios();
 
     void removeRatio(DebtRatio ratio);
 
-    void removeRatio(DoubleProperty property);
+    void removeRatio(String name);
 
 }

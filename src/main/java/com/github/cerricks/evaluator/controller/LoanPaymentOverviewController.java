@@ -15,8 +15,6 @@
  */
 package com.github.cerricks.evaluator.controller;
 
-import static com.github.cerricks.evaluator.Constants.PROPERTY_TOTAL_LOAN_AMOUNT;
-import static com.github.cerricks.evaluator.Constants.PROPERTY_TOTAL_LOAN_PAYMENT;
 import com.github.cerricks.evaluator.MainApp;
 import com.github.cerricks.evaluator.model.Input;
 import com.github.cerricks.evaluator.model.InputCategory;
@@ -26,12 +24,11 @@ import com.github.cerricks.evaluator.model.LoanTerm;
 import com.github.cerricks.evaluator.model.LoanTermUnit;
 import static com.github.cerricks.evaluator.model.LoanTermUnit.MONTHS;
 import static com.github.cerricks.evaluator.model.LoanTermUnit.YEARS;
-import com.github.cerricks.evaluator.model.NamedProperty;
+import com.github.cerricks.evaluator.model.NamedProperties;
 import com.github.cerricks.evaluator.service.LoanPaymentService;
 import com.github.cerricks.evaluator.ui.CurrencyTableCellFormatter;
 import com.github.cerricks.evaluator.ui.CustomCurrencyStringConverter;
 import com.github.cerricks.evaluator.ui.CustomPercentageStringConverter;
-import java.util.Map;
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -77,7 +74,7 @@ public class LoanPaymentOverviewController {
     private LoanPaymentService loanPaymentService;
 
     @Autowired
-    private Map<String, NamedProperty> properties;
+    private NamedProperties namedProperties;
 
     @FXML
     private Label totalLoanAmountLabel;
@@ -127,8 +124,8 @@ public class LoanPaymentOverviewController {
             logger.debug("Initializing: LoanPaymentOverviewController");
         }
 
-        totalLoanAmountLabel.textProperty().bindBidirectional(properties.get(PROPERTY_TOTAL_LOAN_AMOUNT), new CustomCurrencyStringConverter());
-        totalLoanPaymentLabel.textProperty().bindBidirectional(properties.get(PROPERTY_TOTAL_LOAN_PAYMENT), new CustomCurrencyStringConverter());
+        totalLoanAmountLabel.textProperty().bindBidirectional(namedProperties.totalLoanAmountProperty(), new CustomCurrencyStringConverter());
+        totalLoanPaymentLabel.textProperty().bindBidirectional(namedProperties.totalLoanPaymentProperty(), new CustomCurrencyStringConverter());
 
         // configure table
         loanTable.setItems(loanPaymentService.getLoanPayments());

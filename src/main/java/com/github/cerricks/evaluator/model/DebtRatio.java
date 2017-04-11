@@ -31,8 +31,14 @@ public class DebtRatio {
     private final ObjectProperty<Ratio> preDebtRatioProperty = new SimpleObjectProperty();
     private final ObjectProperty<Ratio> postTaxRatioProperty = new SimpleObjectProperty();
 
-    public DebtRatio(final DoubleProperty value, final DoubleProperty preDebtValue, final DoubleProperty postTaxValue) {
+    public DebtRatio(final NamedProperty value, final DoubleProperty preDebtValue, final DoubleProperty postTaxValue) {
         nameProperty.set(value.getName());
+        preDebtRatioProperty.set(new Ratio(preDebtValue, value));
+        postTaxRatioProperty.set(new Ratio(postTaxValue, value));
+    }
+
+    public DebtRatio(final String name, final DoubleProperty value, final DoubleProperty preDebtValue, final DoubleProperty postTaxValue) {
+        nameProperty.set(name);
         preDebtRatioProperty.set(new Ratio(preDebtValue, value));
         postTaxRatioProperty.set(new Ratio(postTaxValue, value));
     }
