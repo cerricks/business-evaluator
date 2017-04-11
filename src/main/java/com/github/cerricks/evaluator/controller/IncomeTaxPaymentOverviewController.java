@@ -81,13 +81,10 @@ public class IncomeTaxPaymentOverviewController {
 
         // configure table columns
         filingStatusColumn.setCellValueFactory(new PropertyValueFactory("filingStatus"));
-
         totalTaxColumn.setCellValueFactory(new PropertyValueFactory("totalTax"));
         totalTaxColumn.setCellFactory(new CurrencyTableCellFormatter());
-
         totalTaxPerMonthColumn.setCellValueFactory(new PropertyValueFactory("totalTaxMonthly"));
         totalTaxPerMonthColumn.setCellFactory(new CurrencyTableCellFormatter());
-
         incomeAfterTaxColumn.setCellValueFactory(new PropertyValueFactory("totalIncomeAfterTax"));
         incomeAfterTaxColumn.setCellFactory(new CurrencyTableCellFormatter());
     }

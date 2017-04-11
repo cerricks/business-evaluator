@@ -49,10 +49,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.converter.NumberStringConverter;
+import org.flywaydb.core.internal.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 /**
@@ -66,11 +66,9 @@ public class UserDefinedInputOverviewController {
     private static final Logger logger = LoggerFactory.getLogger(UserDefinedInputOverviewController.class);
 
     @Autowired
-    @Qualifier("inputCategories")
     private ObservableList<InputCategory> inputCategories;
 
     @Autowired
-    @Qualifier("userDefinedInputCategories")
     private ObservableList<InputCategory> userDefinedInputCategories;
 
     @Autowired
@@ -239,34 +237,43 @@ public class UserDefinedInputOverviewController {
 
     @FXML
     public void handleAdd() {
-        InputCategory category = categoryField.getValue();
-        Double amount = Double.valueOf(valueField.getTextFormatter().getValue().toString());
+        if (isInputValid()) {
+            InputCategory category = categoryField.getValue();
+            Double amount = Double.valueOf(valueField.getTextFormatter().getValue().toString());
 
-        Input customInput = new Input(category, amount);
+            Input customInput = new Input(category, amount);
 
-        if (logger.isDebugEnabled()) {
-            logger.debug(new StringBuilder("Adding custom input [").append(customInput).append("] to table").toString());
-        }
-
-        userDefinedInputs.add(customInput);
-
-        this.calculateTotalAdditionalCost();
-
-        if (!userDefinedInputCategories.contains(category)) {
             if (logger.isDebugEnabled()) {
-                logger.debug("Adding new user defined input category: " + category);
+                logger.debug(new StringBuilder("Adding custom input [").append(customInput).append("] to table").toString());
             }
 
-            inputCategories.add(category);
+            userDefinedInputs.add(customInput);
 
-            inputCategoryRepository.save(category);
+            this.calculateTotalAdditionalCost();
+
+            if (!userDefinedInputCategories.contains(category)) {
+                if (logger.isDebugEnabled()) {
+                    logger.debug("Adding new user defined input category: " + category);
+                }
+
+                inputCategories.add(category);
+
+                inputCategoryRepository.save(category);
+            }
+
+            if (category.getDefaultLoanRate() != null) {
+                loanPaymentService.processDefaultLoan(category.getName(), amount);
+            }
+
+            clearInput();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText("Invalid Input");
+            alert.setContentText("The input entered is invalid or incomplete. Please correct it and try again.");
+
+            alert.showAndWait();
         }
-
-        if (category.getDefaultLoanRate() != null) {
-            loanPaymentService.processDefaultLoan(category.getName(), amount);
-        }
-
-        clearInput();
     }
 
     /**
@@ -300,6 +307,25 @@ public class UserDefinedInputOverviewController {
         }
 
         namedProperties.totalAdditionalExpenseProperty().set(total);
+    }
+
+    /**
+     * Validates the user input in the text fields.
+     *
+     * @return true if the input is valid
+     */
+    private boolean isInputValid() {
+        boolean validInput = true;
+
+        if (categoryField.getSelectionModel().getSelectedIndex() < 0) {
+            return false;
+        }
+
+        if (!StringUtils.hasText(valueField.getText())) {
+            return false;
+        }
+
+        return validInput;
     }
 
 }

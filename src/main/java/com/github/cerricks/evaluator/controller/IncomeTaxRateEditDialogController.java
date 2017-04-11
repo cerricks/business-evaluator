@@ -29,6 +29,7 @@ import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 /**
  * Handles editing income tax rates.
@@ -119,7 +120,31 @@ public class IncomeTaxRateEditDialogController {
      */
     private boolean isInputValid() {
         boolean validInput = true;
-        // TODO: validate input
+
+        if (filingStatusField.getSelectionModel().getSelectedIndex() < 0) {
+            filingStatusField.getStyleClass().add("error");
+
+            validInput = false;
+        } else {
+            filingStatusField.getStyleClass().remove("error");
+        }
+
+        if (!StringUtils.hasText(taxableIncomeFromField.getText())) {
+            taxableIncomeFromField.getStyleClass().add("error");
+
+            validInput = false;
+        } else {
+            taxableIncomeFromField.getStyleClass().remove("error");
+        }
+
+        if (!StringUtils.hasText(taxRateField.getText())) {
+            taxRateField.getStyleClass().add("error");
+
+            validInput = false;
+        } else {
+            taxRateField.getStyleClass().remove("error");
+        }
+
         return validInput;
     }
 

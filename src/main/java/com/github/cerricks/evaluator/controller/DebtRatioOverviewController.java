@@ -75,6 +75,7 @@ public class DebtRatioOverviewController {
             logger.debug("Initializing: DebtRatioOverviewController");
         }
 
+        // configure table
         debtRatioTable.setItems(debtRatioService.getRatios());
         debtRatioTable.setRowFactory((TableView<DebtRatio> tableView) -> {
             final TableRow<DebtRatio> row = new TableRow<>();
@@ -108,17 +109,14 @@ public class DebtRatioOverviewController {
             return row;
         });
 
+        // configure table columns
         nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
-
         preDebtMultipleColumn.setCellValueFactory(cellData -> cellData.getValue().preDebtMultipleProperty().asObject());
         preDebtMultipleColumn.setCellFactory(new NumberTableCellFormatter());
-
         preDebtPercentageColumn.setCellValueFactory(cellData -> cellData.getValue().preDebtPercentageProperty().asObject());
         preDebtPercentageColumn.setCellFactory(new PercentageTableCellFormatter());
-
         postTaxMultipleColumn.setCellValueFactory(cellData -> cellData.getValue().postTaxMultipleProperty().asObject());
         postTaxMultipleColumn.setCellFactory(new NumberTableCellFormatter());
-
         postTaxPercentageColumn.setCellValueFactory(cellData -> cellData.getValue().postTaxPercentageProperty().asObject());
         postTaxPercentageColumn.setCellFactory(new PercentageTableCellFormatter());
     }

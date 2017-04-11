@@ -32,6 +32,7 @@ import com.github.cerricks.evaluator.ui.CustomPercentageStringConverter;
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
@@ -44,10 +45,10 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
+import org.flywaydb.core.internal.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 /**
@@ -64,7 +65,6 @@ public class LoanPaymentOverviewController {
     private MainApp mainApp;
 
     @Autowired
-    @Qualifier("additionalCostInputCategories")
     private ObservableList<InputCategory> additionalCostInputCategories;
 
     @Autowired
@@ -215,27 +215,36 @@ public class LoanPaymentOverviewController {
 
     @FXML
     private void handleAdd() {
-        InputCategory category = categoryField.getSelectionModel().getSelectedItem();
-        Double amount = Double.valueOf(amountField.getTextFormatter().getValue().toString());
-        Double rate = Double.valueOf(rateField.getTextFormatter().getValue().toString());
-        Integer term = termField.getValue();
-        LoanTermUnit termUnit = termUnitField.getSelectionModel().getSelectedItem();
+        if (isInputValid()) {
+            InputCategory category = categoryField.getSelectionModel().getSelectedItem();
+            Double amount = Double.valueOf(amountField.getTextFormatter().getValue().toString());
+            Double rate = Double.valueOf(rateField.getTextFormatter().getValue().toString());
+            Integer term = termField.getValue();
+            LoanTermUnit termUnit = termUnitField.getSelectionModel().getSelectedItem();
 
-        LoanTerm loanTerm = null;
+            LoanTerm loanTerm = null;
 
-        switch (termUnit) {
-            case YEARS:
-                loanTerm = LoanTerm.ofYears(term);
-                break;
+            switch (termUnit) {
+                case YEARS:
+                    loanTerm = LoanTerm.ofYears(term);
+                    break;
 
-            case MONTHS:
-                loanTerm = LoanTerm.ofMonths(term);
-                break;
+                case MONTHS:
+                    loanTerm = LoanTerm.ofMonths(term);
+                    break;
+            }
+
+            loanPaymentService.addLoan(category.getName(), amount, new LoanRate(rate, loanTerm));
+
+            clearInput();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText("Invalid Input");
+            alert.setContentText("The input entered is invalid or incomplete. Please correct it and try again.");
+
+            alert.showAndWait();
         }
-
-        loanPaymentService.addLoan(category.getName(), amount, new LoanRate(rate, loanTerm));
-
-        clearInput();
     }
 
     private void clearInput() {
@@ -244,6 +253,33 @@ public class LoanPaymentOverviewController {
         rateField.clear();
         termField.getValueFactory().setValue(1);
         termUnitField.getSelectionModel().select(YEARS);
+    }
+
+    /**
+     * Validates the user input in the text fields.
+     *
+     * @return true if the input is valid
+     */
+    private boolean isInputValid() {
+        boolean validInput = true;
+
+        if (categoryField.getSelectionModel().getSelectedIndex() < 0) {
+            return false;
+        }
+
+        if (!StringUtils.hasText(amountField.getText())) {
+            return false;
+        }
+
+        if (!StringUtils.hasText(rateField.getText())) {
+            return false;
+        }
+
+        if (termField.getValue() == null) {
+            return false;
+        }
+
+        return validInput;
     }
 
 }

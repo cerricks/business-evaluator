@@ -59,6 +59,9 @@ public class MainController {
     @Autowired
     private NamedProperties namedProperties;
 
+    @Autowired
+    private UserDefinedInputOverviewController userDefinedInputOverviewController;
+
     @FXML
     private MenuItem exitMenuItem;
 
@@ -112,10 +115,14 @@ public class MainController {
      */
     @FXML
     private void handleClear() {
+        // reset components
         namedProperties.reset();
         debtRatioService.reset();
         incomeTaxService.reset();
         loanPaymentService.reset();
+
+        // reset controllers
+        userDefinedInputOverviewController.reset();
 
         // clear input fields
         askingPriceField.clear();

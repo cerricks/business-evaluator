@@ -38,7 +38,6 @@ import javax.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Sort;
@@ -120,26 +119,22 @@ public class MainAppConfig {
         });
     }
 
-    @Bean(name = "inputCategories") // TODO: convert qualifier to name
-    //@Qualifier("inputCategories")
+    @Bean(name = "inputCategories")
     public ObservableList<InputCategory> inputCategories() {
         return FXCollections.observableArrayList(inputCategoryRepository.findAll(new Sort(Sort.Direction.ASC, "name")));
     }
 
-    @Bean
-    @Qualifier("additionalCostInputCategories")
+    @Bean(name = "additionalCostInputCategories")
     public ObservableList<InputCategory> additionalCostInputCategories() {
         return new SortedList<>(new FilteredList<>(inputCategories(), (InputCategory t) -> t.isAdditionalExpense()), (InputCategory o1, InputCategory o2) -> o1.getName().compareTo(o2.getName()));
     }
 
-    @Bean
-    @Qualifier("userDefinedInputCategories")
+    @Bean(name = "userDefinedInputCategories")
     public ObservableList<InputCategory> userDefinedInputCategories() {
         return new SortedList<>(new FilteredList<>(inputCategories(), (InputCategory t) -> t.getSource() == USER), (InputCategory o1, InputCategory o2) -> o1.getName().compareTo(o2.getName()));
     }
 
-    @Bean
-    @Qualifier("userDeclaredInputs")
+    @Bean(name = "userDeclaredInputs")
     public ObservableList<Input> userDeclaredInputs() {
         return FXCollections.observableArrayList();
     }

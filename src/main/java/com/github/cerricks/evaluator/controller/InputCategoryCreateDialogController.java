@@ -37,11 +37,11 @@ import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 /**
+ * Handles dialog for creating new input category.
  *
  * @author cerricks
  */
@@ -56,7 +56,6 @@ public class InputCategoryCreateDialogController {
     private InputCategorySettingsController inputCategorySettingsController;
 
     @Autowired
-    @Qualifier("inputCategories")
     private ObservableList<InputCategory> inputCategories;
 
     @FXML

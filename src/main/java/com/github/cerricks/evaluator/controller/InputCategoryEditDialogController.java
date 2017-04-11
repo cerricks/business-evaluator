@@ -38,11 +38,11 @@ import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 /**
+ * Handles edit dialog for input categories.
  *
  * @author cerricks
  */
@@ -56,7 +56,6 @@ public class InputCategoryEditDialogController {
     private InputCategory inputCategory;
 
     @Autowired
-    @Qualifier("inputCategories")
     private ObservableList<InputCategory> inputCategories;
 
     @FXML
@@ -262,7 +261,8 @@ public class InputCategoryEditDialogController {
             String name = nameField.getText().toUpperCase();
 
             for (InputCategory category : inputCategories) {
-                if (category.getName().toUpperCase().equals(name)) {
+                if (category.getName().toUpperCase().equals(name)
+                        && !inputCategory.getName().toUpperCase().equals(name)) {
                     Alert alert = new Alert(Alert.AlertType.WARNING);
                     alert.setTitle("Warning");
                     alert.setHeaderText("Invalid Name");

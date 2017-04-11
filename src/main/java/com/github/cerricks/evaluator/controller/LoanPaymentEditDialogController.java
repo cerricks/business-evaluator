@@ -32,6 +32,7 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.stage.Stage;
+import org.flywaydb.core.internal.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -171,7 +172,7 @@ public class LoanPaymentEditDialogController {
     private boolean isInputValid() {
         boolean validInput = true;
 
-        if (amountField.getText() == null || amountField.getText().length() == 0) {
+        if (!StringUtils.hasText(amountField.getText())) {
             amountField.getStyleClass().add("error");
 
             validInput = false;
@@ -179,7 +180,7 @@ public class LoanPaymentEditDialogController {
             amountField.getStyleClass().remove("error");
         }
 
-        if (rateField.getText() == null || rateField.getText().length() == 0) {
+        if (!StringUtils.hasText(rateField.getText())) {
             rateField.getStyleClass().add("error");
 
             validInput = false;

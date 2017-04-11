@@ -30,6 +30,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
@@ -43,8 +44,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 /**
+ * Handles viewing income tax rate settings.
  *
  * @author cerricks
  */
@@ -158,21 +161,30 @@ public class IncomeTaxRateSettingsController {
 
     @FXML
     public void handleAdd() {
-        FilingStatus filingStatus = filingStatusField.getSelectionModel().getSelectedItem();
-        Double incomeTaxFrom = Double.valueOf(taxableIncomeFromField.getTextFormatter().getValue().toString());
-        Double incomeTaxTo = taxableIncomeToField.getText() == null || taxableIncomeToField.getText().length() == 0 ? Double.NaN : Double.valueOf(taxableIncomeToField.getTextFormatter().getValue().toString());
-        Double flatTax = Double.valueOf(flatTaxField.getTextFormatter().getValue().toString());
-        Double taxRate = Double.valueOf(taxRateField.getTextFormatter().getValue().toString());
+        if (isInputValid()) {
+            FilingStatus filingStatus = filingStatusField.getSelectionModel().getSelectedItem();
+            Double incomeTaxFrom = Double.valueOf(taxableIncomeFromField.getTextFormatter().getValue().toString());
+            Double incomeTaxTo = taxableIncomeToField.getText() == null || taxableIncomeToField.getText().length() == 0 ? Double.NaN : Double.valueOf(taxableIncomeToField.getTextFormatter().getValue().toString());
+            Double flatTax = Double.valueOf(flatTaxField.getTextFormatter().getValue().toString());
+            Double taxRate = Double.valueOf(taxRateField.getTextFormatter().getValue().toString());
 
-        IncomeTaxRate incomeTaxRate = new IncomeTaxRate(filingStatus, incomeTaxFrom, incomeTaxTo, flatTax, taxRate);
+            IncomeTaxRate incomeTaxRate = new IncomeTaxRate(filingStatus, incomeTaxFrom, incomeTaxTo, flatTax, taxRate);
 
-        if (logger.isDebugEnabled()) {
-            logger.debug(new StringBuilder("Adding income tax rate [").append(incomeTaxRate).append("]").toString());
+            if (logger.isDebugEnabled()) {
+                logger.debug(new StringBuilder("Adding income tax rate [").append(incomeTaxRate).append("]").toString());
+            }
+
+            incomeTaxRates_tmp.add(incomeTaxRate);
+
+            resetInput();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText("Invalid Input");
+            alert.setContentText("The input entered is invalid or incomplete. Please correct it and try again.");
+
+            alert.showAndWait();
         }
-
-        incomeTaxRates_tmp.add(incomeTaxRate);
-
-        resetInput();
     }
 
     private void resetInput() {
@@ -231,6 +243,27 @@ public class IncomeTaxRateSettingsController {
         incomeTaxPaymentCalculator.setRateTable(newRateTable);
 
         incomeTaxRates.setAll(newRateTable.getRates());
+    }
+
+    /**
+     * Validates the user input in the text fields.
+     *
+     * @return true if the input is valid
+     */
+    private boolean isInputValid() {
+        if (filingStatusField.getSelectionModel().getSelectedIndex() < 0) {
+            return false;
+        }
+
+        if (!StringUtils.hasText(taxableIncomeFromField.getText())) {
+            return false;
+        }
+
+        if (!StringUtils.hasText(taxRateField.getText())) {
+            return false;
+        }
+
+        return true;
     }
 
 }
