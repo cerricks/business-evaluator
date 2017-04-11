@@ -74,7 +74,7 @@ public class IncomeTaxServiceImpl implements IncomeTaxService {
 
         for (IncomeTaxPayment incomeTaxPayment : incomeTaxPayments) {
             if (incomeTaxPayment.getFilingStatus() == SINGLE) {
-                namedProperties.cashAfterTaxProperty().set(incomeTaxPayment.getTotalIncomeAfterTax()); // TODO: fix this
+                namedProperties.cashAfterTaxProperty().set(incomeTaxPayment.getTotalIncomeAfterTax());
             }
         }
     }

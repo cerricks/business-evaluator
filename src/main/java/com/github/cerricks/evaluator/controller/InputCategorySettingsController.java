@@ -162,11 +162,7 @@ public class InputCategorySettingsController {
     }
 
     public void addTemporaryItem(final InputCategory category) {
-        if (!inputCategories_tmp.contains(category)) {
-            inputCategories_tmp.add(category);
-        } else {
-            logger.warn("Input category [" + category + "] already exists"); // TODO: display message to user here
-        }
+        inputCategories_tmp.add(category);
     }
 
     public void cancel() {
