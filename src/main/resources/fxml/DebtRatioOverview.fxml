@@ -5,11 +5,11 @@
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.VBox?>
 
-<TitledPane animated="false" collapsible="false" focusTraversable="false" maxHeight="5000.0" minHeight="300.0" minWidth="-Infinity" prefWidth="600.0" text="Debt Ratio to Cash" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.cerricks.evaluator.controller.DebtRatioOverviewController">
+<TitledPane animated="false" collapsible="false" focusTraversable="false" maxHeight="5000.0" minHeight="300.0" minWidth="-Infinity" text="Debt Ratio to Cash" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.cerricks.evaluator.controller.DebtRatioOverviewController">
     <content>
         <VBox spacing="5.0">
             <children>
-                <TableView fx:id="debtRatioTable" VBox.vgrow="ALWAYS">
+                <TableView fx:id="debtRatioTable" prefWidth="650.0" VBox.vgrow="ALWAYS">
                     <columns>
                         <TableColumn fx:id="nameColumn" prefWidth="175.0" text="Description" />
                         <TableColumn text="Original Cash Flow">
