@@ -38,13 +38,12 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
+import javafx.util.converter.IntegerStringConverter;
 import org.flywaydb.core.internal.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -110,7 +109,7 @@ public class LoanPaymentOverviewController {
     private TextField rateField;
 
     @FXML
-    private Spinner<Integer> termField;
+    private TextField termField;
 
     @FXML
     private ComboBox<LoanTermUnit> termUnitField;
@@ -193,22 +192,19 @@ public class LoanPaymentOverviewController {
 
                 if (loanRate != null) {
                     rateField.setText(Double.toString(loanRate.getRate() * 100));
-                    termField.getValueFactory().setValue(loanRate.getTerm().getLength());
+                    termField.setText(Integer.toString(loanRate.getTerm().getLength()));
                     termUnitField.getSelectionModel().select(loanRate.getTerm().getUnit());
                 } else {
                     rateField.clear();
-                    termField.getValueFactory().setValue(1);
+                    termField.clear();
                     termUnitField.getSelectionModel().select(YEARS);
                 }
             }
         });
 
         amountField.setTextFormatter(new TextFormatter(new CustomCurrencyStringConverter()));
-
         rateField.setTextFormatter(new TextFormatter(new CustomPercentageStringConverter()));
-
-        termField.setValueFactory(new IntegerSpinnerValueFactory(1, 60, 1));
-
+        termField.setTextFormatter(new TextFormatter(new IntegerStringConverter()));
         termUnitField.getItems().addAll(LoanTermUnit.values());
         termUnitField.getSelectionModel().select(YEARS);
     }
@@ -219,7 +215,7 @@ public class LoanPaymentOverviewController {
             InputCategory category = categoryField.getSelectionModel().getSelectedItem();
             Double amount = Double.valueOf(amountField.getTextFormatter().getValue().toString());
             Double rate = Double.valueOf(rateField.getTextFormatter().getValue().toString());
-            Integer term = termField.getValue();
+            Integer term = Integer.valueOf(termField.getTextFormatter().getValue().toString());
             LoanTermUnit termUnit = termUnitField.getSelectionModel().getSelectedItem();
 
             LoanTerm loanTerm = null;
@@ -251,7 +247,7 @@ public class LoanPaymentOverviewController {
         categoryField.setValue(null);
         amountField.clear();
         rateField.clear();
-        termField.getValueFactory().setValue(1);
+        termField.clear();
         termUnitField.getSelectionModel().select(YEARS);
     }
 
@@ -275,7 +271,7 @@ public class LoanPaymentOverviewController {
             return false;
         }
 
-        if (termField.getValue() == null) {
+        if (!StringUtils.hasText(termField.getText())) {
             return false;
         }
 

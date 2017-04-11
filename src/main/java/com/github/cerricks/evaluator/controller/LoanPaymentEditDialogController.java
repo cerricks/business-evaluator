@@ -27,11 +27,10 @@ import com.github.cerricks.evaluator.util.LoanPaymentCalculator;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.stage.Stage;
+import javafx.util.converter.IntegerStringConverter;
 import org.flywaydb.core.internal.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,7 +64,7 @@ public class LoanPaymentEditDialogController {
     private TextField rateField;
 
     @FXML
-    private Spinner<Integer> termField;
+    private TextField termField;
 
     @FXML
     public ComboBox<LoanTermUnit> termUnitField;
@@ -81,7 +80,7 @@ public class LoanPaymentEditDialogController {
 
         amountField.setTextFormatter(new TextFormatter(new CustomCurrencyStringConverter()));
         rateField.setTextFormatter(new TextFormatter(new CustomPercentageStringConverter()));
-        termField.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 60, 1));
+        termField.setTextFormatter(new TextFormatter(new IntegerStringConverter()));
         termUnitField.getItems().addAll(LoanTermUnit.values());
     }
 
@@ -107,7 +106,7 @@ public class LoanPaymentEditDialogController {
         categoryLabel.setText(loanPayment.getCategory().getName());
         amountField.setText(Double.toString(loan.getAmount()));
         rateField.setText(Double.toString(loan.getRate() * 100));
-        termField.getValueFactory().setValue(loan.getTerm().getLength());
+        termField.setText(Integer.toString(loan.getTerm().getLength()));
         termUnitField.getSelectionModel().select(loan.getTerm().getUnit());
     }
 
@@ -119,7 +118,7 @@ public class LoanPaymentEditDialogController {
         if (isInputValid()) {
             Double amount = Double.valueOf(amountField.getTextFormatter().getValue().toString());
             Double rate = Double.valueOf(rateField.getTextFormatter().getValue().toString());
-            Integer term = termField.getValue();
+            Integer term = Integer.valueOf(termField.getTextFormatter().getValue().toString());
             LoanTermUnit termUnit = termUnitField.getSelectionModel().getSelectedItem();
 
             LoanTerm loanTerm = null;
@@ -187,7 +186,7 @@ public class LoanPaymentEditDialogController {
             rateField.getStyleClass().remove("error");
         }
 
-        if (termField.getValue() == null) {
+        if (!StringUtils.hasText(termField.getText())) {
             termField.getStyleClass().add("error");
 
             validInput = false;

@@ -4,7 +4,6 @@
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -52,8 +51,8 @@
                 <TextField fx:id="rateField" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="75.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                 <HBox spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                     <children>
-                        <Spinner fx:id="termField" editable="true" prefHeight="25.0" prefWidth="65.0" />
-                        <ComboBox fx:id="termUnitField" prefHeight="25.0" prefWidth="100.0" />
+                        <TextField fx:id="termField" alignment="CENTER_RIGHT" prefWidth="65.0" promptText="Length" />
+                        <ComboBox fx:id="termUnitField" prefHeight="25.0" prefWidth="80.0" />
                     </children>
                 </HBox>
             </children>

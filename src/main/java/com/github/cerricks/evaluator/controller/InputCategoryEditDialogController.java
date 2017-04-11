@@ -30,11 +30,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.stage.Stage;
+import javafx.util.converter.IntegerStringConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,7 +73,7 @@ public class InputCategoryEditDialogController {
     private TextField defaultLoanRateField;
 
     @FXML
-    private Spinner<Integer> defaultLoanLengthField;
+    private TextField defaultLoanLengthField;
 
     @FXML
     private ChoiceBox<LoanTermUnit> defaultLoanLengthUnitField;
@@ -101,7 +100,7 @@ public class InputCategoryEditDialogController {
                 defaultFinancingOption.setDisable(true);
                 defaultLoanRateField.clear();
                 defaultLoanRateField.setDisable(true);
-                defaultLoanLengthField.getValueFactory().setValue(1);
+                defaultLoanLengthField.clear();
                 defaultLoanLengthField.setDisable(true);
                 defaultLoanLengthUnitField.setValue(YEARS);
                 defaultLoanLengthUnitField.setDisable(true);
@@ -118,7 +117,7 @@ public class InputCategoryEditDialogController {
                 defaultFinancingOption.setDisable(true);
                 defaultLoanRateField.clear();
                 defaultLoanRateField.setDisable(true);
-                defaultLoanLengthField.getValueFactory().setValue(1);
+                defaultLoanLengthField.clear();
                 defaultLoanLengthField.setDisable(true);
                 defaultLoanLengthUnitField.setValue(YEARS);
                 defaultLoanLengthUnitField.setDisable(true);
@@ -135,7 +134,7 @@ public class InputCategoryEditDialogController {
                 // reset and disable inputs
                 defaultLoanRateField.clear();
                 defaultLoanRateField.setDisable(true);
-                defaultLoanLengthField.getValueFactory().setValue(1);
+                defaultLoanLengthField.clear();
                 defaultLoanLengthField.setDisable(true);
                 defaultLoanLengthUnitField.setValue(YEARS);
                 defaultLoanLengthUnitField.setDisable(true);
@@ -143,9 +142,7 @@ public class InputCategoryEditDialogController {
         });
 
         defaultLoanRateField.setTextFormatter(new TextFormatter(new CustomPercentageStringConverter()));
-
-        defaultLoanLengthField.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 60, 1));
-
+        defaultLoanLengthField.setTextFormatter(new TextFormatter(new IntegerStringConverter()));
         defaultLoanLengthUnitField.getItems().addAll(LoanTermUnit.values());
         defaultLoanLengthUnitField.getSelectionModel().select(YEARS);
     }
@@ -168,13 +165,13 @@ public class InputCategoryEditDialogController {
             LoanRate defaultLoanRate = inputCategory.getDefaultLoanRate();
 
             defaultLoanRateField.setText(Double.toString(defaultLoanRate.getRate() * 100));
-            defaultLoanLengthField.getValueFactory().setValue(defaultLoanRate.getTerm().getLength());
+            defaultLoanLengthField.setText(Integer.toString(defaultLoanRate.getTerm().getLength()));
             defaultLoanLengthUnitField.setValue(defaultLoanRate.getTerm().getUnit());
         } else {
             defaultFinancingOption.setSelected(false);
 
-            defaultLoanRateField.setText(null);
-            defaultLoanLengthField.getValueFactory().setValue(1);
+            defaultLoanRateField.clear();
+            defaultLoanLengthField.clear();
             defaultLoanLengthUnitField.getSelectionModel().select(YEARS);
         }
 
@@ -206,7 +203,7 @@ public class InputCategoryEditDialogController {
 
                 if (defaultFinancingOption.isSelected()) {
                     Double rate = Double.valueOf(defaultLoanRateField.getTextFormatter().getValue().toString());
-                    Integer term = defaultLoanLengthField.getValue();
+                    Integer term = Integer.valueOf(defaultLoanLengthField.getTextFormatter().getValue().toString());
                     LoanTermUnit termUnit = defaultLoanLengthUnitField.getSelectionModel().getSelectedItem();
 
                     LoanTerm loanTerm = null;
@@ -300,7 +297,7 @@ public class InputCategoryEditDialogController {
                 defaultLoanRateField.getStyleClass().remove("error");
             }
 
-            if (defaultLoanLengthField.getValue() <= 0) {
+            if (!StringUtils.hasText(defaultLoanLengthField.getText())) {
                 defaultLoanLengthField.getStyleClass().add("error");
 
                 validInput = false;
