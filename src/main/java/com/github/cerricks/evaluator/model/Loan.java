@@ -24,7 +24,7 @@ import javafx.beans.property.SimpleObjectProperty;
 /**
  * Details on a loan.
  *
- * @author Clifford R. Errickson
+ * @author cerricks
  */
 public class Loan {
 

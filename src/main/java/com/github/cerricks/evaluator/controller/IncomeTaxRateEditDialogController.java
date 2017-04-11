@@ -78,7 +78,7 @@ public class IncomeTaxRateEditDialogController {
     }
 
     @FXML
-    public void initialize() {
+    protected void initialize() {
         if (logger.isDebugEnabled()) {
             logger.debug("Initializing: IncomeTaxRateEditDialogController");
         }

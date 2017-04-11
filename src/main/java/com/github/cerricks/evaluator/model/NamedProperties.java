@@ -28,6 +28,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 /**
+ * Named properties used in system calculations.
  *
  * @author cerricks
  */

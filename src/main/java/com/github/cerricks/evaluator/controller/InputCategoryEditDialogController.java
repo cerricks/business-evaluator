@@ -83,7 +83,7 @@ public class InputCategoryEditDialogController {
     }
 
     @FXML
-    public void initialize() {
+    protected void initialize() {
         if (logger.isDebugEnabled()) {
             logger.debug("Initializing: InputCategoryEditDialogController");
         }

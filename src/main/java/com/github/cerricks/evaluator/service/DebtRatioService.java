@@ -20,7 +20,7 @@ import javafx.beans.property.DoubleProperty;
 import javafx.collections.ObservableList;
 
 /**
- * A service for handling debt ratios.
+ * A service interface for handling {@link DebtRatio} objects.
  *
  * @author cerricks
  */

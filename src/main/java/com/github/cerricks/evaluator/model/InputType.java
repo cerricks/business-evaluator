@@ -16,6 +16,7 @@
 package com.github.cerricks.evaluator.model;
 
 /**
+ * Custom input types.
  *
  * @author cerricks
  */

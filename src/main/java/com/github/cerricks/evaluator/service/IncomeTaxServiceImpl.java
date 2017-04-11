@@ -25,13 +25,16 @@ import javafx.collections.ObservableList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 /**
+ * A service implementation for handling income tax calculations.
  *
  * @author cerricks
  */
 @Service
+@Scope("singleton")
 public class IncomeTaxServiceImpl implements IncomeTaxService {
 
     private static final Logger logger = LoggerFactory.getLogger(IncomeTaxServiceImpl.class);

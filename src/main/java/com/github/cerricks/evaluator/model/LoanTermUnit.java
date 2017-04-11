@@ -16,6 +16,7 @@
 package com.github.cerricks.evaluator.model;
 
 /**
+ * A unit of time for a loan period.
  *
  * @author cerricks
  */

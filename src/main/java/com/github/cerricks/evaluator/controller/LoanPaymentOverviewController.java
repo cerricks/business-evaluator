@@ -119,7 +119,7 @@ public class LoanPaymentOverviewController {
     }
 
     @FXML
-    private void initialize() {
+    protected void initialize() {
         if (logger.isDebugEnabled()) {
             logger.debug("Initializing: LoanPaymentOverviewController");
         }
@@ -141,7 +141,7 @@ public class LoanPaymentOverviewController {
 
             MenuItem editItem = new MenuItem("Edit");
             editItem.setOnAction((event) -> {
-                mainApp.showLoanEditDialog(row.getItem());
+                mainApp.showLoanPaymentEditDialog(row.getItem());
             });
 
             MenuItem removeItem = new MenuItem("Delete");

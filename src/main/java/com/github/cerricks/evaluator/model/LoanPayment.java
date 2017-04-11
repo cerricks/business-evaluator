@@ -21,6 +21,7 @@ import javafx.beans.property.ReadOnlyDoubleWrapper;
 import javafx.beans.property.SimpleObjectProperty;
 
 /**
+ * Represents calculated loan payments.
  *
  * @author cerricks
  */

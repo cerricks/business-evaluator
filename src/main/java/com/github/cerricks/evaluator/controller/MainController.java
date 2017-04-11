@@ -81,7 +81,7 @@ public class MainController {
     }
 
     @FXML
-    private void initialize() {
+    protected void initialize() {
         if (logger.isDebugEnabled()) {
             logger.debug("Initializing: MainController");
         }

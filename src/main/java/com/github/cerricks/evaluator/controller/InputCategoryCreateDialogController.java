@@ -83,7 +83,7 @@ public class InputCategoryCreateDialogController {
     }
 
     @FXML
-    private void initialize() {
+    protected void initialize() {
         if (logger.isDebugEnabled()) {
             logger.debug("Initializing: InputCategoryCreateDialogController");
         }

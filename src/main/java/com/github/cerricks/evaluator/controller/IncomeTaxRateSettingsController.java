@@ -104,7 +104,7 @@ public class IncomeTaxRateSettingsController {
     }
 
     @FXML
-    public void initialize() {
+    protected void initialize() {
         if (logger.isDebugEnabled()) {
             logger.debug("Initializing: IncomeTaxRateSettingsController");
         }

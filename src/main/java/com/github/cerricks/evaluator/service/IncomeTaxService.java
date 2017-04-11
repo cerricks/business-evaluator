@@ -19,6 +19,7 @@ import com.github.cerricks.evaluator.model.IncomeTaxPayment;
 import javafx.collections.ObservableList;
 
 /**
+ * A service interface for handling income tax calculations.
  *
  * @author cerricks
  */

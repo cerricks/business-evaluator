@@ -16,6 +16,7 @@
 package com.github.cerricks.evaluator.model;
 
 /**
+ * Input source.
  *
  * @author cerricks
  */

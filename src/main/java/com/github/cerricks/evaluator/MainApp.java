@@ -63,9 +63,13 @@ public class MainApp extends Application {
     private static final Logger logger = LoggerFactory.getLogger(MainApp.class);
 
     private Stage mainStage;
+
     private Stage settingsStage;
+
     private Parent rootLayout;
+
     private static String[] savedArgs;
+
     private static ConfigurableApplicationContext applicationContext;
 
     @Autowired
@@ -131,71 +135,9 @@ public class MainApp extends Application {
         mainStage.show();
     }
 
-    public void showUserDefinedInputCreateDialog() {
-        FXMLLoader loader = fxmlLoaderService.getLoader(getClass().getResource(FXML_USER_DEFINED_INPUT_CREATE_DIALOG));
-
-        Parent page;
-
-        try {
-            page = loader.load();
-        } catch (IOException ex) {
-            logger.warn("Failed to load: " + FXML_USER_DEFINED_INPUT_CREATE_DIALOG, ex);
-
-            return;
-        }
-
-        // set the stage
-        Stage stage = new Stage();
-        stage.setTitle("Create Custom Input");
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.centerOnScreen();
-        stage.initOwner(mainStage);
-
-        Scene scene = new Scene(page);
-        scene.getStylesheets().add(getClass().getResource(STYLESHEET_DEFAULT).toExternalForm());
-
-        stage.setScene(scene);
-
-        // Set the item into the controller.
-        UserDefinedInputCreateDialogController controller = loader.getController();
-        controller.setStage(stage);
-
-        stage.showAndWait();
-    }
-
-    public void showUserDefinedInputEditDialog(final Input userDefinedInput) {
-        FXMLLoader loader = fxmlLoaderService.getLoader(getClass().getResource(FXML_USER_DEFINED_INPUT_EDIT_DIALOG));
-
-        Parent page;
-
-        try {
-            page = loader.load();
-        } catch (IOException ex) {
-            logger.warn("Failed to load: " + FXML_USER_DEFINED_INPUT_EDIT_DIALOG, ex);
-
-            return;
-        }
-
-        // set the stage
-        Stage stage = new Stage();
-        stage.setTitle("Edit Custom Input");
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.centerOnScreen();
-        stage.initOwner(mainStage);
-
-        Scene scene = new Scene(page);
-        scene.getStylesheets().add(getClass().getResource(STYLESHEET_DEFAULT).toExternalForm());
-
-        stage.setScene(scene);
-
-        // Set the item into the controller.
-        UserDefinedInputEditDialogController controller = loader.getController();
-        controller.setStage(stage);
-        controller.setUserDefinedInput(userDefinedInput);
-
-        stage.showAndWait();
-    }
-
+    /**
+     * Show dialog to create new {@link InputCategory}.
+     */
     public void showInputCategoryCreateDialog() {
         FXMLLoader loader = fxmlLoaderService.getLoader(getClass().getResource(FXML_INPUT_CATEGORY_CREATE_DIALOG));
 
@@ -228,6 +170,11 @@ public class MainApp extends Application {
         stage.showAndWait();
     }
 
+    /**
+     * Show dialog to edit existing {@link InputCategory}.
+     *
+     * @param inputCategory the item to edit.
+     */
     public void showInputCategoryEditDialog(final InputCategory inputCategory) {
         FXMLLoader loader = fxmlLoaderService.getLoader(getClass().getResource(FXML_INPUT_CATEGORY_EDIT_DIALOG));
 
@@ -261,6 +208,11 @@ public class MainApp extends Application {
         stage.showAndWait();
     }
 
+    /**
+     * Show dialog to edit existing {@link IncomeTaxRate}.
+     *
+     * @param incomeTaxRate the item to edit.
+     */
     public void showIncomeTaxRateEditDialog(final IncomeTaxRate incomeTaxRate) {
         FXMLLoader loader = fxmlLoaderService.getLoader(getClass().getResource(FXML_INCOME_TAX_RATE_EDIT_DIALOG));
 
@@ -294,7 +246,12 @@ public class MainApp extends Application {
         stage.showAndWait();
     }
 
-    public void showLoanEditDialog(final LoanPayment loanPayment) {
+    /**
+     * Show dialog to edit existing {@link LoanPayment}.
+     *
+     * @param loanPayment the item to edit.
+     */
+    public void showLoanPaymentEditDialog(final LoanPayment loanPayment) {
         FXMLLoader loader = fxmlLoaderService.getLoader(getClass().getResource(FXML_LOAN_PAYMENT_EDIT_DIALOG));
 
         Parent page;
@@ -309,7 +266,7 @@ public class MainApp extends Application {
 
         // set the stage
         Stage stage = new Stage();
-        stage.setTitle("Edit Loan");
+        stage.setTitle("Edit Loan Payment");
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.centerOnScreen();
         stage.initOwner(mainStage);
@@ -327,6 +284,9 @@ public class MainApp extends Application {
         stage.showAndWait();
     }
 
+    /**
+     * Show settings screen.
+     */
     public void showSettings() {
         FXMLLoader loader = fxmlLoaderService.getLoader(getClass().getResource(FXML_SETTINGS));
 
@@ -358,6 +318,79 @@ public class MainApp extends Application {
         controller.setStage(settingsStage);
 
         settingsStage.showAndWait();
+    }
+
+    /**
+     * Shoe dialog to create new user defined {@link Input}.
+     */
+    public void showUserDefinedInputCreateDialog() {
+        FXMLLoader loader = fxmlLoaderService.getLoader(getClass().getResource(FXML_USER_DEFINED_INPUT_CREATE_DIALOG));
+
+        Parent page;
+
+        try {
+            page = loader.load();
+        } catch (IOException ex) {
+            logger.warn("Failed to load: " + FXML_USER_DEFINED_INPUT_CREATE_DIALOG, ex);
+
+            return;
+        }
+
+        // set the stage
+        Stage stage = new Stage();
+        stage.setTitle("Create Custom Input");
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.centerOnScreen();
+        stage.initOwner(mainStage);
+
+        Scene scene = new Scene(page);
+        scene.getStylesheets().add(getClass().getResource(STYLESHEET_DEFAULT).toExternalForm());
+
+        stage.setScene(scene);
+
+        // Set the item into the controller.
+        UserDefinedInputCreateDialogController controller = loader.getController();
+        controller.setStage(stage);
+
+        stage.showAndWait();
+    }
+
+    /**
+     * Show dialog to edit existing user defined {@link Input}.
+     *
+     * @param userDefinedInput the input to edit.
+     */
+    public void showUserDefinedInputEditDialog(final Input input) {
+        FXMLLoader loader = fxmlLoaderService.getLoader(getClass().getResource(FXML_USER_DEFINED_INPUT_EDIT_DIALOG));
+
+        Parent page;
+
+        try {
+            page = loader.load();
+        } catch (IOException ex) {
+            logger.warn("Failed to load: " + FXML_USER_DEFINED_INPUT_EDIT_DIALOG, ex);
+
+            return;
+        }
+
+        // set the stage
+        Stage stage = new Stage();
+        stage.setTitle("Edit Custom Input");
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.centerOnScreen();
+        stage.initOwner(mainStage);
+
+        Scene scene = new Scene(page);
+        scene.getStylesheets().add(getClass().getResource(STYLESHEET_DEFAULT).toExternalForm());
+
+        stage.setScene(scene);
+
+        // Set the item into the controller.
+        UserDefinedInputEditDialogController controller = loader.getController();
+        controller.setStage(stage);
+        controller.setUserDefinedInput(input);
+
+        stage.showAndWait();
     }
 
 }

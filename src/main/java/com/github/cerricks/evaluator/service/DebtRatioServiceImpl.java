@@ -24,6 +24,7 @@ import javafx.collections.ObservableList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 /**
@@ -32,6 +33,7 @@ import org.springframework.stereotype.Service;
  * @author cerricks
  */
 @Service
+@Scope("singleton")
 public class DebtRatioServiceImpl implements DebtRatioService {
 
     private static final Logger logger = LoggerFactory.getLogger(DebtRatioServiceImpl.class);

@@ -19,16 +19,14 @@ import java.math.RoundingMode;
 import java.text.NumberFormat;
 
 /**
- * A utility to for basic formatting.
+ * A utility to for basic output formatting.
  *
  * @author cerricks
  */
 public class FormatUtil {
 
     private static final NumberFormat currencyFormat;
-
     private static final NumberFormat numberFormat;
-
     private static final NumberFormat percentFormat;
 
     static {

@@ -21,7 +21,7 @@ import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleDoubleProperty;
 
 /**
- * A user defined input amount.
+ * A user defined input with amount.
  *
  * @author cerricks
  */

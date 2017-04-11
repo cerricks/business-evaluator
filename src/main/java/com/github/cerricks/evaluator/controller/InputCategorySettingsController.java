@@ -78,7 +78,7 @@ public class InputCategorySettingsController {
     }
 
     @FXML
-    public void initialize() {
+    protected void initialize() {
         if (logger.isDebugEnabled()) {
             logger.debug("Initializing: InputCategorySettingsController");
         }

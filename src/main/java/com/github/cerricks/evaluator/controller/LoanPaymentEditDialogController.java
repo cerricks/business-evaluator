@@ -74,7 +74,7 @@ public class LoanPaymentEditDialogController {
     }
 
     @FXML
-    private void initialize() {
+    protected void initialize() {
         if (logger.isDebugEnabled()) {
             logger.debug("Initializing: LoanPaymentEditDialogController");
         }
@@ -140,12 +140,11 @@ public class LoanPaymentEditDialogController {
             double totalInterestPayment = loanPaymentCalculator.calculateInterestPaid(loan);
 
             /**
-             * Note: The order that these properties are set is important. The
-             * loan must be set at the end due to the listener on it that
-             * requires other properties to be set.
+             * Note: The order that these properties are set is important. The loan must be set at
+             * the end due to the listener on it that requires other properties to be set.
              *
-             * TODO: is there a better way to handle this? Possibly delaying
-             * listener until end of method???
+             * TODO: is there a better way to handle this? Possibly delaying listener until end of
+             * method???
              */
             loanPayment.monthlyPaymentProperty().set(monthlyPayment);
             loanPayment.annualPaymentProperty().set(monthlyPayment * 12);

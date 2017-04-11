@@ -48,7 +48,7 @@ public class SettingsController {
     }
 
     @FXML
-    private void initialize() {
+    protected void initialize() {
         if (logger.isDebugEnabled()) {
             logger.debug("Initializing: SettingsController");
         }

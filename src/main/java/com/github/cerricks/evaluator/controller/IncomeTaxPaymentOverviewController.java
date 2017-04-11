@@ -69,7 +69,7 @@ public class IncomeTaxPaymentOverviewController {
     }
 
     @FXML
-    private void initialize() {
+    protected void initialize() {
         if (logger.isDebugEnabled()) {
             logger.debug("Initializing: IncomeTaxPaymentOverviewController");
         }

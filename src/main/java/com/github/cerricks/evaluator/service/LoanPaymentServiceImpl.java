@@ -28,13 +28,16 @@ import javafx.collections.ObservableList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 /**
+ * A service implementation for handling loan payment calculations.
  *
  * @author cerricks
  */
 @Service
+@Scope("singleton")
 public class LoanPaymentServiceImpl implements LoanPaymentService {
 
     private static final Logger logger = LoggerFactory.getLogger(LoanPaymentServiceImpl.class);
@@ -114,12 +117,11 @@ public class LoanPaymentServiceImpl implements LoanPaymentService {
             double totalInterestPayment = loanPaymentCalculator.calculateInterestPaid(loan);
 
             /**
-             * Note: The order that these properties are set is important. The
-             * loan must be set at the end due to the listener on it that
-             * requires other properties to be set.
+             * Note: The order that these properties are set is important. The loan must be set at
+             * the end due to the listener on it that requires other properties to be set.
              *
-             * TODO: is there a better way to handle this? Possibly delaying
-             * listener until end of method???
+             * TODO: is there a better way to handle this? Possibly delaying listener until end of
+             * method???
              */
             loanPayment.setCategory(loanPayment.getCategory());
             loanPayment.monthlyPaymentProperty().set(monthlyPayment);

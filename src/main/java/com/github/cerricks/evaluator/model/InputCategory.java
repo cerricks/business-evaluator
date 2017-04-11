@@ -37,6 +37,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
+ * Input details.
  *
  * @author cerricks
  */

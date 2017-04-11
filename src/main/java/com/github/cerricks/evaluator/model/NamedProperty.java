@@ -16,9 +16,9 @@
 package com.github.cerricks.evaluator.model;
 
 import javafx.beans.property.SimpleDoubleProperty;
-import org.springframework.data.annotation.Id;
 
 /**
+ * Represents a property with a name.
  *
  * @author cerricks
  */
@@ -32,13 +32,20 @@ public class NamedProperty extends SimpleDoubleProperty {
         super(null, name, initialValue);
     }
 
+    public NamedProperty(final Object bean, final String name) {
+        super(bean, name);
+    }
+
+    public NamedProperty(final Object bean, final String name, final double initialValue) {
+        super(bean, name, initialValue);
+    }
+
     @Override
     public String toString() {
         return this.getName();
     }
 
     @Override
-    @Id
     public String getName() {
         return super.getName();
     }

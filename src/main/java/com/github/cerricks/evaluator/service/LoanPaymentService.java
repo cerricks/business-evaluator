@@ -20,6 +20,7 @@ import com.github.cerricks.evaluator.model.LoanRate;
 import javafx.collections.ObservableList;
 
 /**
+ * A service interface for handling loan payment calculations.
  *
  * @author cerricks
  */

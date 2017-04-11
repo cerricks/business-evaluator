@@ -22,7 +22,7 @@ import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 
 /**
- * Object representing a loan rate and terms.
+ * Represents a loan rate and period.
  *
  * @author cerricks
  */

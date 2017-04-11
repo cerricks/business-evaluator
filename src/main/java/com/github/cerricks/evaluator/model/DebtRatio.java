@@ -22,6 +22,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 /**
+ * Ratio between a number and debt calculations.
  *
  * @author cerricks
  */

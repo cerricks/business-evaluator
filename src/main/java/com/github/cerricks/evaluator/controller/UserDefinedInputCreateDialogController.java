@@ -86,7 +86,7 @@ public class UserDefinedInputCreateDialogController {
     }
 
     @FXML
-    private void initialize() {
+    protected void initialize() {
         if (logger.isDebugEnabled()) {
             logger.debug("Initializing: UserDefinedInputCreateDialogController");
         }
