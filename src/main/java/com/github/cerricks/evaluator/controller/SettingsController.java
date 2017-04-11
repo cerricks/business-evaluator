@@ -55,7 +55,7 @@ public class SettingsController {
     }
 
     @FXML
-    private void handleCancel() {
+    protected void handleCancel() {
         if (logger.isDebugEnabled()) {
             logger.debug("Reverting changes to settings");
         }
@@ -67,7 +67,7 @@ public class SettingsController {
     }
 
     @FXML
-    private void handleSave() {
+    protected void handleSave() {
         if (logger.isDebugEnabled()) {
             logger.debug("Saving changes to settings");
         }

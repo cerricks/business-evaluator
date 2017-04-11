@@ -76,7 +76,7 @@ public class UserDefinedInputEditDialogController {
     }
 
     @FXML
-    private void handleOk() {
+    protected void handleOk() {
         if (isInputValid()) {
             userDefinedInput.setValue(Double.valueOf(valueField.getTextFormatter().getValue().toString()));
 
@@ -85,7 +85,7 @@ public class UserDefinedInputEditDialogController {
     }
 
     @FXML
-    private void handleCancel() {
+    protected void handleCancel() {
         stage.close();
     }
 

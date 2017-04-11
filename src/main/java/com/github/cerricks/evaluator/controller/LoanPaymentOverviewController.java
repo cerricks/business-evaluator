@@ -210,7 +210,7 @@ public class LoanPaymentOverviewController {
     }
 
     @FXML
-    private void handleAdd() {
+    protected void handleAdd() {
         if (isInputValid()) {
             InputCategory category = categoryField.getSelectionModel().getSelectedItem();
             Double amount = Double.valueOf(amountField.getTextFormatter().getValue().toString());

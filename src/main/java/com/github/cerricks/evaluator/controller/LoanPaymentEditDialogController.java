@@ -114,7 +114,7 @@ public class LoanPaymentEditDialogController {
      * Called when the user clicks OK.
      */
     @FXML
-    private void handleOk() {
+    protected void handleOk() {
         if (isInputValid()) {
             Double amount = Double.valueOf(amountField.getTextFormatter().getValue().toString());
             Double rate = Double.valueOf(rateField.getTextFormatter().getValue().toString());
@@ -158,7 +158,7 @@ public class LoanPaymentEditDialogController {
      * Called when the user clicks cancel.
      */
     @FXML
-    private void handleCancel() {
+    protected void handleCancel() {
         stage.close();
     }
 

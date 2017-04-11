@@ -114,7 +114,7 @@ public class MainController {
      * Handles request to clear all inputs and reset results to default state.
      */
     @FXML
-    private void handleClear() {
+    protected void handleClear() {
         // reset components
         namedProperties.reset();
         debtRatioService.reset();

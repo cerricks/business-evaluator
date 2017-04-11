@@ -91,7 +91,7 @@ public class IncomeTaxRateEditDialogController {
     }
 
     @FXML
-    private void handleOk() {
+    protected void handleOk() {
         if (isInputValid()) {
             FilingStatus filingStatus = filingStatusField.getSelectionModel().getSelectedItem();
             Double incomeTaxFrom = Double.valueOf(taxableIncomeFromField.getTextFormatter().getValue().toString());
@@ -109,7 +109,7 @@ public class IncomeTaxRateEditDialogController {
     }
 
     @FXML
-    private void handleCancel() {
+    protected void handleCancel() {
         stage.close();
     }
 

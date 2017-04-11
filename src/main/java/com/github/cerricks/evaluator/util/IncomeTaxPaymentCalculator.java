@@ -33,8 +33,7 @@ public class IncomeTaxPaymentCalculator {
     private IncomeTaxRateTable rateTable;
 
     /**
-     * Creates an instance of IncomeTaxCalculator based on the given
-     * {@link IncomeTaxRateTable}.
+     * Creates an instance of IncomeTaxCalculator based on the given {@link IncomeTaxRateTable}.
      *
      * @param rateTable the rate table used for calculations.
      */
@@ -77,10 +76,6 @@ public class IncomeTaxPaymentCalculator {
 
         // get the tax rate from the tax table
         IncomeTaxRate taxRate = rateTable.getTaxRate(filingStatus, taxableIncome);
-
-        if (taxRate == null) {
-            throw new IllegalArgumentException("Tax rate not found for filingStatus [" + filingStatus + " and taxableIncome [" + taxableIncome + "]");
-        }
 
         if (logger.isDebugEnabled()) {
             logger.debug(new StringBuilder("Calculating income tax for filing status [").append(filingStatus).append("] on ").append(FormatUtil.formatCurrency(taxableIncome)).append(" using tax rate [").append(taxRate).append("]").toString());

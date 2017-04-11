@@ -155,7 +155,7 @@ public class UserDefinedInputCreateDialogController {
     }
 
     @FXML
-    private void handleOk() {
+    protected void handleOk() {
         if (isInputValid()) {
             String name = nameField.getText();
             InputType type = typeField.getValue();
@@ -209,7 +209,7 @@ public class UserDefinedInputCreateDialogController {
     }
 
     @FXML
-    private void handleCancel() {
+    protected void handleCancel() {
         stage.close();
     }
 

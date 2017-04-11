@@ -152,7 +152,7 @@ public class InputCategoryCreateDialogController {
     }
 
     @FXML
-    private void handleOk() {
+    protected void handleOk() {
         if (isInputValid()) {
             String name = nameField.getText();
 
@@ -202,7 +202,7 @@ public class InputCategoryCreateDialogController {
     }
 
     @FXML
-    private void handleCancel() {
+    protected void handleCancel() {
         stage.close();
     }
 
