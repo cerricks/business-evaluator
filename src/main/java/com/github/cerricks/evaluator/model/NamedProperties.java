@@ -25,6 +25,8 @@ import static com.github.cerricks.evaluator.Constants.PROPERTY_TAXABLE_INCOME;
 import static com.github.cerricks.evaluator.Constants.PROPERTY_TOTAL_ADDITIONAL_EXPENSE;
 import static com.github.cerricks.evaluator.Constants.PROPERTY_TOTAL_LOAN_AMOUNT;
 import static com.github.cerricks.evaluator.Constants.PROPERTY_TOTAL_LOAN_PAYMENT;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -37,18 +39,28 @@ import org.springframework.stereotype.Component;
 @Scope("singleton")
 public class NamedProperties {
 
-    private final NamedProperty askingPriceProperty = new NamedProperty(PROPERTY_ASKING_PRICE);
-    private final NamedProperty askingPriceBalanceProperty = new NamedProperty(PROPERTY_ASKING_PRICE_BALANCE, 0);
-    private final NamedProperty cashAfterTaxProperty = new NamedProperty(PROPERTY_CASH_AFTER_TAX, 0);
-    private final NamedProperty downPaymentProperty = new NamedProperty(PROPERTY_DOWN_PAYMENT);
-    private final NamedProperty originalCashFlowProperty = new NamedProperty(PROPERTY_ORIGINAL_CASH_FLOW);
-    private final NamedProperty percentageOfCashFlowProperty = new NamedProperty(PROPERTY_PERCENTAGE_OF_CASH_FLOW, 0);
-    private final NamedProperty taxableIncomeProperty = new NamedProperty(PROPERTY_TAXABLE_INCOME, 0);
-    private final NamedProperty totalAdditionalExpenseProperty = new NamedProperty(PROPERTY_TOTAL_ADDITIONAL_EXPENSE, 0);
-    private final NamedProperty totalLoanAmountProperty = new NamedProperty(PROPERTY_TOTAL_LOAN_AMOUNT, 0);
-    private final NamedProperty totalLoanPaymentProperty = new NamedProperty(PROPERTY_TOTAL_LOAN_PAYMENT, 0);
+    private final DoubleProperty askingPriceProperty;
+    private final DoubleProperty askingPriceBalanceProperty;
+    private final DoubleProperty cashAfterTaxProperty;
+    private final DoubleProperty downPaymentProperty;
+    private final DoubleProperty originalCashFlowProperty;
+    private final DoubleProperty percentageOfCashFlowProperty;
+    private final DoubleProperty taxableIncomeProperty;
+    private final DoubleProperty totalAdditionalExpenseProperty;
+    private final DoubleProperty totalLoanAmountProperty;
+    private final DoubleProperty totalLoanPaymentProperty;
 
     public NamedProperties() {
+        askingPriceProperty = new SimpleDoubleProperty(this, PROPERTY_ASKING_PRICE);
+        askingPriceBalanceProperty = new SimpleDoubleProperty(this, PROPERTY_ASKING_PRICE_BALANCE, 0);
+        cashAfterTaxProperty = new SimpleDoubleProperty(this, PROPERTY_CASH_AFTER_TAX, 0);
+        downPaymentProperty = new SimpleDoubleProperty(this, PROPERTY_DOWN_PAYMENT);
+        originalCashFlowProperty = new SimpleDoubleProperty(this, PROPERTY_ORIGINAL_CASH_FLOW);
+        percentageOfCashFlowProperty = new SimpleDoubleProperty(this, PROPERTY_PERCENTAGE_OF_CASH_FLOW, 0);
+        taxableIncomeProperty = new SimpleDoubleProperty(this, PROPERTY_TAXABLE_INCOME, 0);
+        totalAdditionalExpenseProperty = new SimpleDoubleProperty(this, PROPERTY_TOTAL_ADDITIONAL_EXPENSE, 0);
+        totalLoanAmountProperty = new SimpleDoubleProperty(this, PROPERTY_TOTAL_LOAN_AMOUNT, 0);
+        totalLoanPaymentProperty = new SimpleDoubleProperty(this, PROPERTY_TOTAL_LOAN_PAYMENT, 0);
     }
 
     public void reset() {
@@ -64,43 +76,43 @@ public class NamedProperties {
         totalLoanPaymentProperty.set(0);
     }
 
-    public NamedProperty askingPriceProperty() {
+    public DoubleProperty askingPriceProperty() {
         return askingPriceProperty;
     }
 
-    public NamedProperty askingPriceBalanceProperty() {
+    public DoubleProperty askingPriceBalanceProperty() {
         return askingPriceBalanceProperty;
     }
 
-    public NamedProperty cashAfterTaxProperty() {
+    public DoubleProperty cashAfterTaxProperty() {
         return cashAfterTaxProperty;
     }
 
-    public NamedProperty downPaymentProperty() {
+    public DoubleProperty downPaymentProperty() {
         return downPaymentProperty;
     }
 
-    public NamedProperty originalCashFlowProperty() {
+    public DoubleProperty originalCashFlowProperty() {
         return originalCashFlowProperty;
     }
 
-    public NamedProperty percentageOfCashFlowProperty() {
+    public DoubleProperty percentageOfCashFlowProperty() {
         return percentageOfCashFlowProperty;
     }
 
-    public NamedProperty taxableIncomeProperty() {
+    public DoubleProperty taxableIncomeProperty() {
         return taxableIncomeProperty;
     }
 
-    public NamedProperty totalAdditionalExpenseProperty() {
+    public DoubleProperty totalAdditionalExpenseProperty() {
         return totalAdditionalExpenseProperty;
     }
 
-    public NamedProperty totalLoanAmountProperty() {
+    public DoubleProperty totalLoanAmountProperty() {
         return totalLoanAmountProperty;
     }
 
-    public NamedProperty totalLoanPaymentProperty() {
+    public DoubleProperty totalLoanPaymentProperty() {
         return totalLoanPaymentProperty;
     }
 

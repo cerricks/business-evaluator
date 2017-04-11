@@ -19,25 +19,41 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 
 /**
+ * Represents the ratio between two properties.
  *
  * @author cerricks
  */
 public class Ratio {
 
     private final DoubleProperty firstProperty;
-
     private final DoubleProperty secondProperty;
-
     private final DoubleProperty percentageProperty = new SimpleDoubleProperty();
-
     private final DoubleProperty multipleProperty = new SimpleDoubleProperty();
 
+    /**
+     * Creates a ratio between two properties.
+     *
+     * <p>
+     * firstProperty : secondProperty</p>
+     *
+     * @param firstProperty the first property in the ratio.
+     * @param secondProperty the second property in the ratio.
+     */
     public Ratio(final DoubleProperty firstProperty, final DoubleProperty secondProperty) {
+        if (firstProperty == null) {
+            throw new IllegalArgumentException("firstProperty cannot be null");
+        }
+
+        if (secondProperty == null) {
+            throw new IllegalArgumentException("secondProperty cannot be null");
+        }
+
         this.firstProperty = firstProperty;
         this.secondProperty = secondProperty;
         this.percentageProperty.set(calculatePercentageRatio());
         this.multipleProperty.set(calculateMultipleRatio());
 
+        // add listeners to update ratios if the underlying properties change
         this.firstProperty.addListener((observable, oldValue, newValue) -> {
             percentageProperty.set(calculatePercentageRatio());
             multipleProperty.set(calculateMultipleRatio());
@@ -49,6 +65,11 @@ public class Ratio {
         });
     }
 
+    /**
+     * Calculates the percentage between two properties.
+     *
+     * @return the percentage between two properties.
+     */
     private double calculatePercentageRatio() {
         double a = firstProperty.doubleValue();
         double b = secondProperty.doubleValue();
@@ -58,6 +79,11 @@ public class Ratio {
                 : 0;
     }
 
+    /**
+     * Calculates the multiple between two properties.
+     *
+     * @return the multiple between two properties.
+     */
     private double calculateMultipleRatio() {
         double a = firstProperty.doubleValue();
         double b = secondProperty.doubleValue();
