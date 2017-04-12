@@ -123,64 +123,35 @@
                     </execution>
                 </executions>
             </plugin> 
-
+            
             <plugin>
                 <groupId>com.zenjava</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>8.8.3</version>
                 <configuration>
                     <mainClass>com.github.cerricks.evaluator.MainApp</mainClass>
+                    <appName>Business Evaluator ${project.version}</appName>  
+                    <needShortcut>true</needShortcut>
                 </configuration>
-            </plugin>
-          
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <version>1.8</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <configuration>
-                            <target>
-                                <taskdef name="jfxdeploy" classname="com.sun.javafx.tools.ant.DeployFXTask" classpathref="maven.plugin.classpath" />
-
-                                <jfxdeploy outdir="${project.build.directory}/deploy" outfile="${project.build.finalName}" nativeBundles="all">
-                                    <info title="${project.name}" />
-
-                                    <application name="${project.name}" mainClass="com.github.cerricks.evaluator.MainApp" />
-                                    
-                                    <resources>
-                                        <fileset dir="${project.build.directory}">
-                                            <include name="*.jar" />
-                                        </fileset>
-                                        <fileset dir="${basedir}/src/main/resources">
-                                            <include name="logging.properties" />
-                                        </fileset>
-                                    </resources>
-
-                                    <platform>
-                                        <jvmarg value="-Xms512m" />
-                                        <jvmarg value="-Xmx1024m" />
-                                        <jvmarg value="-Djava.util.logging.config.file=logging.properties" />
-                                    </platform>
-                                </jfxdeploy>
-                            </target>
-                        </configuration>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
+                <executions> 
+                    <!-- required before build-native --> 
+                    <execution> 
+                        <id>create-jfxjar</id> 
+                        <phase>package</phase> 
+                        <goals> 
+                            <goal>build-jar</goal> 
+                        </goals> 
+                    </execution> 
+                    <execution> 
+                        <id>create-native</id> 
+                        <phase>package</phase> 
+                        <goals> 
+                            <goal>build-native</goal> 
+                        </goals> 
                     </execution>
-                </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.oracle</groupId>
-                        <artifactId>ant-javafx</artifactId>
-                        <version>8.0</version>
-                        <systemPath>${java.home}/../lib/ant-javafx.jar</systemPath>
-                        <scope>system</scope>
-                    </dependency>
-                </dependencies>
-            </plugin> 
+                </executions> 
+            </plugin>
+
         </plugins>
         <resources>
             <!-- copy fxml and css resources -->
